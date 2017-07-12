@@ -7,6 +7,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class CacheWorker {
 	
 	private final static int DATA_QUEUE_SIZE = 21;
