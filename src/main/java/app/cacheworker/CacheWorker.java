@@ -7,10 +7,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CacheWorker {
+public class CacheWorker implements InitializingBean{
 	
 	private final static int DATA_QUEUE_SIZE = 21;
 	private final static int THREAD_SIZE = 10;
@@ -21,13 +23,10 @@ public class CacheWorker {
 	private  Thread mThread;
 	
 	
-	public CacheWorker(){}
-//	public  CacheWorker(Map<String,Class<? extends DataRunnable>> taskTypes){
-//		this.taskTypes.putAll(taskTypes);
-//	}
-	
-	
-	public void start(){
+	public CacheWorker(){
+		//start();
+	}	
+	private void start(){
 		if(mThread==null){
 			this.mThread = new Thread(mRunnable);
 			this.mThread.start();
@@ -45,6 +44,7 @@ public class CacheWorker {
 			return -1;	
 	}
 	public void setTypeMap(Map<String,Class<? extends DataRunnable>> taskTypes){
+		if(taskTypes==null) return ;
 		this.taskTypes.clear();
 		this.taskTypes.putAll(taskTypes);
 	}
@@ -69,6 +69,13 @@ public class CacheWorker {
 		}
 		
 	};
+
+
+	@Override
+	public void afterPropertiesSet() throws Exception {
+
+		start();
+	}
 	
 	
 	

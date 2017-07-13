@@ -39,6 +39,7 @@ public class MyBus {
 	
 
 	public  void sendMessage(Object message){	
+		if(message==null) return ;
 		msgQueue.offer(message);
 	}
 	
