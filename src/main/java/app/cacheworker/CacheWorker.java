@@ -21,10 +21,10 @@ public class CacheWorker {
 	private  Thread mThread;
 	
 	
-	public  CacheWorker(Map<String,Class<? extends DataRunnable>> taskTypes){
-		this.taskTypes.putAll(taskTypes);
-
-	}
+	public CacheWorker(){}
+//	public  CacheWorker(Map<String,Class<? extends DataRunnable>> taskTypes){
+//		this.taskTypes.putAll(taskTypes);
+//	}
 	
 	
 	public void start(){
@@ -44,9 +44,12 @@ public class CacheWorker {
 		else
 			return -1;	
 	}
+	public void setTypeMap(Map<String,Class<? extends DataRunnable>> taskTypes){
+		this.taskTypes.clear();
+		this.taskTypes.putAll(taskTypes);
+	}
 	
 	Runnable mRunnable = new Runnable(){
-
 		@Override
 		public void run() {
 			while(true){

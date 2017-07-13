@@ -27,13 +27,13 @@ public class MyBus {
 		return bus;
 	}
 	
-	public  <E> void regReceiver(MyReceiver<E> receiver,Class<E> c){
+	public  <E> void regReceiver(MyReceiver<E> receiver,Class<E> msgType){
 		@SuppressWarnings("rawtypes")
-		List<MyReceiver> lr = mReceivers.get(c.getName());
+		List<MyReceiver> lr = mReceivers.get(msgType.getName());
 		if(lr==null)
 			lr = new ArrayList<>();
 		lr.add(receiver);
-		mReceivers.put(c.getName(), lr);
+		mReceivers.put(msgType.getName(), lr);
 	}
 	
 	
@@ -42,9 +42,9 @@ public class MyBus {
 		msgQueue.offer(message);
 	}
 	
-	public  <E> void unregReceiver(MyReceiver<E> receiver,Class<E> c){
+	public  <E> void unregReceiver(MyReceiver<E> receiver,Class<E> msgType){
 		@SuppressWarnings("rawtypes")
-		List<MyReceiver> lr = mReceivers.get(c.getName());
+		List<MyReceiver> lr = mReceivers.get(msgType.getName());
 		if(lr!=null)
 			lr.remove(receiver);
 	}
