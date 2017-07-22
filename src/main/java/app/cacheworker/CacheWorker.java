@@ -8,7 +8,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -73,7 +72,6 @@ public class CacheWorker implements InitializingBean{
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-
 		start();
 	}
 	
