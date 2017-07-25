@@ -1,19 +1,19 @@
 package app;
 
 import org.springframework.boot.CommandLineRunner;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import app.database.DataBaseService;
 
 @SpringBootApplication
 public class TrafficDataServiceApplication implements CommandLineRunner  {
 	
-	private final DataBaseService test;
+	/*private final DataBaseService test;
 	
 	public TrafficDataServiceApplication(DataBaseService test){
 		this.test = test;
-	}
+	}*/
 	
 	public static void main(String[] args) {
 		SpringApplication.run(TrafficDataServiceApplication.class, args);
