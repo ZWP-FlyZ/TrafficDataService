@@ -1,6 +1,6 @@
 package app.model.raw;
 
-public class RoadPassRawData {
+public class RoadPassRawData extends LadTraRawData{
 	private String CAR_ID;
 	private double PASSENGER_TURNOVER;
 	private String CAR_TYPE;
