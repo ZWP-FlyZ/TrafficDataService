@@ -8,6 +8,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -20,6 +21,9 @@ public class CacheWorker implements InitializingBean{
 	private final  Map<String,Class<? extends DataRunnable>> taskTypes = new HashMap<>();
 	private final ExecutorService  threadPool = Executors.newFixedThreadPool(THREAD_SIZE);
 	private  Thread mThread;
+	
+	@Autowired
+	DataService dataService;
 	
 	
 	public CacheWorker(){
@@ -55,6 +59,7 @@ public class CacheWorker implements InitializingBean{
 				try {
 					DataPackage dp = dataQueue.take();
 					DataRunnable dr = taskTypes.get(dp.getDataType()).newInstance();
+					dr.setDataService(dataService);
 					dr.setDataPackage(dp);
 					threadPool.execute(dr);
 				} catch (InterruptedException e) {

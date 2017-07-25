@@ -10,6 +10,7 @@ import app.model.raw.RoadGoodsRawData;
 public class RoadPassRunnable extends DataRunnable {
 
 	private DataPackage dp;
+	private DataService ds;
 	
 	@Override
 	public void run() {
@@ -26,5 +27,13 @@ public class RoadPassRunnable extends DataRunnable {
 		// TODO Auto-generated method stub
 		this.dp = dp;
 	}
+
+	@Override
+	public void setDataService(DataService ds) {
+		// TODO Auto-generated method stub
+		this.ds = ds;
+	}
+	
+	
 
 }
