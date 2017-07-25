@@ -46,4 +46,10 @@ public class RoadGoodsRunnable extends DataRunnable {
 		this.dp = dp;
 	}
 
+	@Override
+	public void setDataService(DataService ds) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
