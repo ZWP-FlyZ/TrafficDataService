@@ -6,8 +6,8 @@ public class LadTraData {
 	protected String carId;
 	protected String inTime;
 	protected String traType;
-	protected String palce1;
-	protected String palce2;
+	protected String place1;
+	protected String place2;
 	protected String companyId;
 	protected String fuelType;
 	protected Double fuelCsption;
@@ -32,17 +32,17 @@ public class LadTraData {
 	public void setTraType(String traType) {
 		this.traType = traType;
 	}
-	public String getPalce1() {
-		return palce1;
+	public String getPlace1() {
+		return place1;
 	}
-	public void setPalce1(String palce1) {
-		this.palce1 = palce1;
+	public void setPlace1(String palce1) {
+		this.place1 = palce1;
 	}
-	public String getPalce2() {
-		return palce2;
+	public String getPlace2() {
+		return place2;
 	}
-	public void setPalce2(String palce2) {
-		this.palce2 = palce2;
+	public void setPlace2(String palce2) {
+		this.place2 = palce2;
 	}
 	public String getCompanyId() {
 		return companyId;

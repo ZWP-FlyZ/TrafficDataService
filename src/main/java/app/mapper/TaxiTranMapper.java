@@ -12,6 +12,6 @@ public interface TaxiTranMapper {
 			+ "VALUES(#{carId},#{inTime},#{traType},#{place1},#{place2},#{companyId},"
 			+ "#{fuelType},#{fuelCsption},#{goTurn},#{dpCot},"
 			+ "#{tranDis},#{entS})")
-	public void addTaxiTran(TaxiTranData ttData);
+	public void add(TaxiTranData ttData);
 	
 }

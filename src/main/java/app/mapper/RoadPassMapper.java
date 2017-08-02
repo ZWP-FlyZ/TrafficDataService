@@ -13,6 +13,6 @@ public interface RoadPassMapper {
 			+ "VALUES(#{carId},#{inTime},#{traType},#{place1},#{place2},#{companyId},"
 			+ "#{fuelType},#{fuelCsption},#{goTurn},#{carType},#{sitCot},"
 			+ "#{tranDis},#{entS})")
-	public void addRoadPass(RoadPassData rpData);
+	public void add(RoadPassData rpData);
 
 }

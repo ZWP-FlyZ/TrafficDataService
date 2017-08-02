@@ -2,7 +2,7 @@ package app.model;
 
 public class RoadPassData extends LadTraData {
 	private String carType;
-	private int sitCot;
+	private Integer sitCot;
 	public String getCarType() {
 		return carType;
 	}
@@ -12,7 +12,7 @@ public class RoadPassData extends LadTraData {
 	public int getSitCot() {
 		return sitCot;
 	}
-	public void setSitCot(int sitCot) {
+	public void setSitCot(Integer sitCot) {
 		this.sitCot = sitCot;
 	}
 	

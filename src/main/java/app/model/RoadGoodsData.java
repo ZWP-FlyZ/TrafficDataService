@@ -3,7 +3,7 @@ package app.model;
 public class RoadGoodsData extends LadTraData {
 	
 	private String carType;
-	private double tonnage;
+	private Double tonnage;
 	public String getCarType() {
 		return carType;
 	}
@@ -13,7 +13,7 @@ public class RoadGoodsData extends LadTraData {
 	public double getTonnage() {
 		return tonnage;
 	}
-	public void setTonnage(double tonnage) {
+	public void setTonnage(Double tonnage) {
 		this.tonnage = tonnage;
 	}
 	

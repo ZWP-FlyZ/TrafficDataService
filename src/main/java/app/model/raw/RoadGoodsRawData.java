@@ -2,20 +2,14 @@ package app.model.raw;
 
 public class RoadGoodsRawData extends LadTraRawData {
 	
-	private String TRUCK_ID;
-	private double TRANSPORT_TURNOVER;
+	private Double TRANSPORT_TURNOVER;
 	private String CAR_TYPE;
-	private double APPROVED_CARGO;
-	public String getTRUCK_ID() {
-		return TRUCK_ID;
-	}
-	public void setTRUCK_ID(String tRUCK_ID) {
-		TRUCK_ID = tRUCK_ID;
-	}
+	private Double APPROVED_CARGO;
+	
 	public double getTRANSPORT_TURNOVER() {
 		return TRANSPORT_TURNOVER;
 	}
-	public void setTRANSPORT_TURNOVER(double tRANSPORT_TURNOVER) {
+	public void setTRANSPORT_TURNOVER(Double tRANSPORT_TURNOVER) {
 		TRANSPORT_TURNOVER = tRANSPORT_TURNOVER;
 	}
 	public String getCAR_TYPE() {
@@ -27,7 +21,7 @@ public class RoadGoodsRawData extends LadTraRawData {
 	public double getAPPROVED_CARGO() {
 		return APPROVED_CARGO;
 	}
-	public void setAPPROVED_CARGO(double aPPROVED_CARGO) {
+	public void setAPPROVED_CARGO(Double aPPROVED_CARGO) {
 		APPROVED_CARGO = aPPROVED_CARGO;
 	}
 

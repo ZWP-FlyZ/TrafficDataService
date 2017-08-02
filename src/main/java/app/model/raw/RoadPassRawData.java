@@ -1,22 +1,16 @@
 package app.model.raw;
 
 public class RoadPassRawData extends LadTraRawData{
-	private String CAR_ID;
-	private double PASSENGER_TURNOVER;
+	
+	private Double PASSENGER_TURNOVER;
 	private String CAR_TYPE;
-	private int PASSENGER_CAPACITY;
+	private Integer PASSENGER_CAPACITY;
 	
 	
-	public String getCAR_ID() {
-		return CAR_ID;
-	}
-	public void setCAR_ID(String cAR_ID) {
-		CAR_ID = cAR_ID;
-	}
 	public double getPASSENGER_TURNOVER() {
 		return PASSENGER_TURNOVER;
 	}
-	public void setPASSENGER_TURNOVER(double pASSENGER_TURNOVER) {
+	public void setPASSENGER_TURNOVER(Double pASSENGER_TURNOVER) {
 		PASSENGER_TURNOVER = pASSENGER_TURNOVER;
 	}
 	public String getCAR_TYPE() {
@@ -28,7 +22,7 @@ public class RoadPassRawData extends LadTraRawData{
 	public int getPASSENGER_CAPACITY() {
 		return PASSENGER_CAPACITY;
 	}
-	public void setPASSENGER_CAPACITY(int pASSENGER_CAPACITY) {
+	public void setPASSENGER_CAPACITY(Integer pASSENGER_CAPACITY) {
 		PASSENGER_CAPACITY = pASSENGER_CAPACITY;
 	}
 

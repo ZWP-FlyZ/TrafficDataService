@@ -13,6 +13,6 @@ public interface BusTranMapper {
 			+ "VALUES(#{carId},#{inTime},#{traType},#{place1},#{place2},#{companyId},"
 			+ "#{fuelType},#{fuelCsption},#{goTurn},#{carLength},"
 			+ "#{tranDis},#{entS})")
-	public void addBusTran(BusTranData btData);
+	public void add(BusTranData btData);
 
 }

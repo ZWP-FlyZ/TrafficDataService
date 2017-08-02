@@ -13,6 +13,6 @@ public interface RoadGoodsMapper {
 			+ "VALUES(#{carId},#{inTime},#{traType},#{place1},#{place2},#{companyId},"
 			+ "#{fuelType},#{fuelCsption},#{goTurn},#{carType},#{tonnage},"
 			+ "#{tranDis},#{entS})")
-	public void addRoadGoods(RoadGoodsData rgData);
+	public void add(RoadGoodsData rgData);
 
 }
