@@ -11,7 +11,6 @@ public class LadTraRawData {
 	protected String FUEL_TYPE;
 	protected Double TOTAL_FUEL;
 	protected Double RANGE_ABILITY;
-	
 	public String getPLATE_NUMBER() {
 		return PLATE_NUMBER;
 	}
@@ -42,7 +41,7 @@ public class LadTraRawData {
 	public void setCOMPANY_ID(String cOMPANY_ID) {
 		COMPANY_ID = cOMPANY_ID;
 	}
-	public double getVEHICLE_SUM() {
+	public Double getVEHICLE_SUM() {
 		return VEHICLE_SUM;
 	}
 	public void setVEHICLE_SUM(Double vEHICLE_SUM) {
@@ -54,16 +53,18 @@ public class LadTraRawData {
 	public void setFUEL_TYPE(String fUEL_TYPE) {
 		FUEL_TYPE = fUEL_TYPE;
 	}
-	public double getTOTAL_FUEL() {
+	public Double getTOTAL_FUEL() {
 		return TOTAL_FUEL;
 	}
 	public void setTOTAL_FUEL(Double tOTAL_FUEL) {
 		TOTAL_FUEL = tOTAL_FUEL;
 	}
-	public double getRANGE_ABILITY() {
+	public Double getRANGE_ABILITY() {
 		return RANGE_ABILITY;
 	}
 	public void setRANGE_ABILITY(Double rANGE_ABILITY) {
 		RANGE_ABILITY = rANGE_ABILITY;
 	}
+	
+	
 }

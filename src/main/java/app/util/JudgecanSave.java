@@ -1,0 +1,56 @@
+package app.util;
+
+import java.lang.reflect.Field;
+
+public class JudgecanSave {
+
+	@SuppressWarnings("rawtypes")
+	public static boolean JudgeNull(Class cur_class,Object obj,boolean haveNull){
+		try {
+			for (Field field : cur_class.getDeclaredFields()) {
+				field.setAccessible(true);
+				System.out.println(field.getName()+": "+field.get(obj));
+				if (field.get(obj)==null) {
+					haveNull = true;
+				}
+			}
+			if (cur_class.getSuperclass() != null) {
+				haveNull = JudgeNull(cur_class.getSuperclass(), obj, haveNull);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+		return haveNull;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static boolean JudgePortProNull(Class cur_class,Object obj,boolean haveNull){
+		int flag = 0;
+		int count = 0;
+		try {
+			for (Field field : cur_class.getDeclaredFields()) {
+				flag++;
+				field.setAccessible(true);
+				if (field.get(obj)==null) {
+					if (flag>11&&flag<5) {
+						haveNull = true;
+					}else{
+						count++;
+						field.set(obj, 0.000);
+					}	
+				}
+			}
+			if (count>6) {
+				haveNull = true;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+		return haveNull;
+	}
+	
+}

@@ -2,15 +2,17 @@ package app.model;
 
 public class BusTranData extends LadTraData {
 	
-	private double carLength;
+	private Double carLength;
 
-	public double getCarLength() {
+	public Double getCarLength() {
 		return carLength;
 	}
 
-	public void setCarLength(double carLength) {
+	public void setCarLength(Double carLength) {
 		this.carLength = carLength;
 	}
+	
+	
 	
 	
 	
