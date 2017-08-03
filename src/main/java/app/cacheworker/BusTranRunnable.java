@@ -1,5 +1,6 @@
 package app.cacheworker;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,13 +18,29 @@ public class BusTranRunnable extends DataRunnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		@SuppressWarnings("unchecked")
 		List<BusTranRawData> btrdList = (ArrayList<BusTranRawData>)dp.getData();
+		boolean haveNull;
 		for (BusTranRawData rawData : btrdList) {
-			BusTranData newData = new BusTranData();
-			GraftTraData.cvtLadTraData(rawData, newData);
-			this.cvtBusTranData(rawData, newData);
+			haveNull = false;
+			try {
+				for (Field field : rawData.getClass().getDeclaredFields()) {
+					field.setAccessible(true);
+					if (field.get(rawData)==null) {
+						haveNull = true;
+					}
+				}	
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			if (!haveNull) {
+				BusTranData newData = new BusTranData();
+				GraftTraData.cvtLadTraData(rawData, newData);
+				this.cvtBusTranData(rawData, newData);
+				ds.busTranMapper.add(newData);
+			}
 			ds.rawBusTranMapper.add(rawData);
-			ds.busTranMapper.add(newData);
 		}
 
 	}

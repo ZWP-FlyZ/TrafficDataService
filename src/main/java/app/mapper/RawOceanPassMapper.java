@@ -3,7 +3,7 @@ package app.mapper;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 
-import app.model.raw.OceanGoodsRawData;
+import app.model.raw.OceanPassRawData;
 
 @Mapper
 public interface RawOceanPassMapper {
@@ -12,5 +12,5 @@ public interface RawOceanPassMapper {
 			+ "VALUES(#{shipId},#{countDate},#{areaId},#{transType},#{companyId},"
 			+ "#{shipNumber},#{fuelType},#{fuelCsption},#{psgergoTurn},#{countPsger},"
 			+ "#{sail})")
-	public void add(OceanGoodsRawData ogRawData);
+	public void add(OceanPassRawData opRawData);
 }

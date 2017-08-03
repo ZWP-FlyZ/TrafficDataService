@@ -2,7 +2,6 @@ package app.util;
 
 import java.text.DecimalFormat;
 
-import app.model.CityInfoData;
 import app.model.LadTraData;
 import app.model.WatTraData;
 import app.model.raw.LadTraRawData;

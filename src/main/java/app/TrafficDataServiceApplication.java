@@ -45,7 +45,7 @@ public class TrafficDataServiceApplication implements CommandLineRunner  {
 		//test.addUser();
 		
 		
-		/*List<RoadPassRawData> list= new ArrayList<RoadPassRawData>();
+		List<RoadPassRawData> list= new ArrayList<RoadPassRawData>();
 		RoadPassRawData one = new RoadPassRawData();
 		one.setPLATE_NUMBER("浙KH2801");
 		one.setREPORT_TIME("201704");
@@ -56,7 +56,7 @@ public class TrafficDataServiceApplication implements CommandLineRunner  {
 		one.setFUEL_TYPE("f2");
 		one.setTOTAL_FUEL(1234.32);
 		one.setPASSENGER_TURNOVER(342.2);
-		one.setCAR_TYPE("c1");
+		//one.setCAR_TYPE("c1");
 		one.setPASSENGER_CAPACITY(40);
 		one.setRANGE_ABILITY(7250.25);
 		//dataService.rawRoadPassMapper.addRawRoadPass(one);
@@ -69,9 +69,9 @@ public class TrafficDataServiceApplication implements CommandLineRunner  {
 		roPaRunnable.setDataPackage(dp);
 		roPaRunnable.setDataService(ds);
 		Thread t1 = new Thread(roPaRunnable);
-		t1.start();*/
+		t1.start();
 		
-		List<RiverTranRawData> list = new ArrayList<RiverTranRawData>();
+		/*List<RiverTranRawData> list = new ArrayList<RiverTranRawData>();
 		RiverTranRawData one = new RiverTranRawData();
 		one.setShipId("s13055807");
 		one.setCountDate("201707");
@@ -94,6 +94,6 @@ public class TrafficDataServiceApplication implements CommandLineRunner  {
 		riverTranRunnable.setDataPackage(dp);
 		riverTranRunnable.setDataService(ds);
 		Thread t1 = new Thread(riverTranRunnable);
-		t1.start();
+		t1.start();*/
 	}
 }

@@ -1,8 +1,13 @@
 package app.cacheworker;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+
 import app.model.CityInfoData;
 import app.model.OceanPassData;
 import app.model.raw.OceanPassRawData;
+import app.util.GraftTraData;
 
 public class OceanPassRunnable extends DataRunnable {
 
@@ -12,6 +17,30 @@ public class OceanPassRunnable extends DataRunnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		@SuppressWarnings("unchecked")
+		List<OceanPassRawData> oprdList = (ArrayList<OceanPassRawData>)dp.getData();
+		boolean haveNull;
+		for (OceanPassRawData rawData : oprdList) {
+			haveNull = false;
+			try {
+				for (Field field : rawData.getClass().getDeclaredFields()) {
+					field.setAccessible(true);
+					if (field.get(rawData)==null) {
+						haveNull = true;
+					}
+				}	
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			if(!haveNull){
+				OceanPassData newData = new OceanPassData();
+				GraftTraData.cvtWatTraData(rawData, newData);
+				this.cvtOceanPassData(rawData, newData);
+				ds.oceanPassMapper.add(newData);
+			}
+			ds.rawOceanPassMapper.add(rawData);
+		}
 
 	}
 	

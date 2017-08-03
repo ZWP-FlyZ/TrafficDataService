@@ -9,8 +9,8 @@ import app.model.PortProData;
 public interface PortProMapper {
 
 	@Insert("INSERT INTO portproduct(companyId,inTime,traType,place1,place2,diesel"
-			+ "gasoline,coal,power,other,entS,proTask) "
+			+ "gasoline,coal,power,other,entS,proTask,throughput) "
 			+ "VALUES(#{companyId},#{inTime},#{traType},#{place1},#{place2},#{diesel},"
-			+ "#{gasoline},#{coal},#{power},#{other},#{entS},#{proTask})")
+			+ "#{gasoline},#{coal},#{power},#{other},#{entS},#{proTask},#{throughput})")
 	public void add(PortProData portProData);
 }
