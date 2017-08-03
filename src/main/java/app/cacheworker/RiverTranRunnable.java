@@ -1,6 +1,5 @@
 package app.cacheworker;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +8,7 @@ import app.model.CityInfoData;
 import app.model.RiverTranData;
 import app.model.raw.RiverTranRawData;
 import app.util.GraftTraData;
+import app.util.JudgecanSave;
 
 public class RiverTranRunnable extends DataRunnable {
 
@@ -23,17 +23,7 @@ public class RiverTranRunnable extends DataRunnable {
 		boolean haveNull;
 		for (RiverTranRawData rawData : rtrdList) {
 			haveNull = false;
-			try {
-				for (Field field : rawData.getClass().getDeclaredFields()) {
-					field.setAccessible(true);
-					if (field.get(rawData)==null) {
-						haveNull = true;
-					}
-				}	
-			} catch (Exception e) {
-				// TODO: handle exception
-				e.printStackTrace();
-			}
+			haveNull = JudgecanSave.JudgeNull(rawData.getClass(), rawData, haveNull);
 			if(!haveNull){
 				RiverTranData newData = new RiverTranData();
 				GraftTraData.cvtWatTraData(rawData, newData);

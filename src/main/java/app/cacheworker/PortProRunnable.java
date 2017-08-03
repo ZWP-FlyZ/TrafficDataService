@@ -1,6 +1,5 @@
 package app.cacheworker;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +7,7 @@ import app.model.CityInfoData;
 import app.model.PortProData;
 import app.model.raw.PortProRawData;
 import app.util.ConvertTool;
+import app.util.JudgecanSave;
 
 public class PortProRunnable extends DataRunnable {
 
@@ -24,17 +24,7 @@ public class PortProRunnable extends DataRunnable {
 			haveNull = false;
 			String compType = rawData.getTransType();
 			if (compType.equals("t8")) {
-				try {
-					for (Field field : rawData.getClass().getDeclaredFields()) {
-						field.setAccessible(true);
-						if (field.get(rawData)==null) {
-							haveNull = true;
-						}
-					}	
-				} catch (Exception e) {
-					// TODO: handle exception
-					e.printStackTrace();
-				}
+				haveNull = JudgecanSave.JudgePortProNull(rawData.getClass(), rawData, haveNull);
 				if (!haveNull) {
 					PortProData newData = new PortProData();
 					this.cvtPortProData(rawData, newData);
@@ -59,6 +49,7 @@ public class PortProRunnable extends DataRunnable {
 		newData.setOther(rawData.getOther());
 		newData.setThroughput(rawData.getThroughput());
 		newData.setProTask(rawData.getProTask());
+		newData.setEntS(0);
 
 		String inTime = ConvertTool.decodeDate(rawData.getCountDate());
 		newData.setInTime(inTime);

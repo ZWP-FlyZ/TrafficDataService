@@ -2,7 +2,6 @@ package app.cacheworker;
 
 
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +9,7 @@ import app.model.CityInfoData;
 import app.model.RoadPassData;
 import app.model.raw.RoadPassRawData;
 import app.util.GraftTraData;
+import app.util.JudgecanSave;
 
 
 public class RoadPassRunnable extends DataRunnable {
@@ -27,17 +27,8 @@ public class RoadPassRunnable extends DataRunnable {
 		boolean haveNull;
 		for(RoadPassRawData rawData:rprdList){
 			haveNull = false;
-			try {
-				for (Field field : rawData.getClass().getDeclaredFields()) {
-					field.setAccessible(true);
-					if (field.get(rawData)==null) {
-						haveNull = true;
-					}
-				}	
-			} catch (Exception e) {
-				// TODO: handle exception
-				e.printStackTrace();
-			}
+			haveNull = JudgecanSave.JudgeNull(rawData.getClass(), rawData, haveNull);
+			
 			if (!haveNull) {
 				RoadPassData newData = new RoadPassData();
 				GraftTraData.cvtLadTraData(rawData, newData);

@@ -1,6 +1,5 @@
 package app.cacheworker;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +7,7 @@ import app.model.CityInfoData;
 import app.model.OceanGoodsData;
 import app.model.raw.OceanGoodsRawData;
 import app.util.GraftTraData;
+import app.util.JudgecanSave;
 
 public class OceanGoodsRunnable extends DataRunnable{
 
@@ -22,17 +22,7 @@ public class OceanGoodsRunnable extends DataRunnable{
 		boolean haveNull;
 		for (OceanGoodsRawData rawData : ogrdList) {
 			haveNull = false;
-			try {
-				for (Field field : rawData.getClass().getDeclaredFields()) {
-					field.setAccessible(true);
-					if (field.get(rawData)==null) {
-						haveNull = true;
-					}
-				}	
-			} catch (Exception e) {
-				// TODO: handle exception
-				e.printStackTrace();
-			}
+			haveNull = JudgecanSave.JudgeNull(rawData.getClass(), rawData, haveNull);
 			if(!haveNull){
 				OceanGoodsData newData = new OceanGoodsData();
 				GraftTraData.cvtWatTraData(rawData, newData);
