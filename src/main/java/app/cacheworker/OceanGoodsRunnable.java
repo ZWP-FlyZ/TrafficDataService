@@ -1,5 +1,6 @@
 package app.cacheworker;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,14 +17,30 @@ public class OceanGoodsRunnable extends DataRunnable{
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		@SuppressWarnings("unchecked")
 		List<OceanGoodsRawData> ogrdList = (ArrayList<OceanGoodsRawData>)dp.getData();
+		boolean haveNull;
 		for (OceanGoodsRawData rawData : ogrdList) {
-			
-			OceanGoodsData newData = new OceanGoodsData();
-			GraftTraData.cvtWatTraData(rawData, newData);
-			this.cvtOceanGoodsData(rawData, newData);
+			haveNull = false;
+			try {
+				for (Field field : rawData.getClass().getDeclaredFields()) {
+					field.setAccessible(true);
+					if (field.get(rawData)==null) {
+						haveNull = true;
+					}
+				}	
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			if(!haveNull){
+				OceanGoodsData newData = new OceanGoodsData();
+				GraftTraData.cvtWatTraData(rawData, newData);
+				this.cvtOceanGoodsData(rawData, newData);
+				ds.oceanGoodsMapper.add(newData);
+			}
 			ds.rawOceanGoodsMapper.add(rawData);
-			ds.oceanGoodsMapper.add(newData);
+			
 		}
 		
 	}

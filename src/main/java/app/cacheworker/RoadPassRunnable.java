@@ -2,6 +2,7 @@ package app.cacheworker;
 
 
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,14 +22,29 @@ public class RoadPassRunnable extends DataRunnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		@SuppressWarnings("unchecked")
 		List<RoadPassRawData>  rprdList = (ArrayList<RoadPassRawData>)dp.getData();
-		for(RoadPassRawData rprd:rprdList){
-			
-			RoadPassData ropaData = new RoadPassData();
-			GraftTraData.cvtLadTraData(rprd, ropaData);
-			this.cvtRoadPassData(rprd, ropaData);
-			ds.rawRoadPassMapper.add(rprd);
-			ds.roadPassMapper.add(ropaData);	
+		boolean haveNull;
+		for(RoadPassRawData rawData:rprdList){
+			haveNull = false;
+			try {
+				for (Field field : rawData.getClass().getDeclaredFields()) {
+					field.setAccessible(true);
+					if (field.get(rawData)==null) {
+						haveNull = true;
+					}
+				}	
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			if (!haveNull) {
+				RoadPassData newData = new RoadPassData();
+				GraftTraData.cvtLadTraData(rawData, newData);
+				this.cvtRoadPassData(rawData, newData);
+				ds.roadPassMapper.add(newData);
+			}		
+			ds.rawRoadPassMapper.add(rawData);			
 		
 		}
 	}

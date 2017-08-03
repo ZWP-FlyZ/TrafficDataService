@@ -1,5 +1,6 @@
 package app.cacheworker;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -17,13 +18,29 @@ public class TaxiTranRunnable extends DataRunnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		@SuppressWarnings("unchecked")
 		List<TaxiTranRawData> ttrdList = (ArrayList<TaxiTranRawData>)dp.getData();
+		boolean haveNull;
 		for(TaxiTranRawData rawData:ttrdList){
-			TaxiTranData newData = new TaxiTranData();
-			GraftTraData.cvtLadTraData(rawData, newData);
-			this.cvtTaxiTranData(rawData, newData);
+			haveNull = false;
+			try {
+				for (Field field : rawData.getClass().getDeclaredFields()) {
+					field.setAccessible(true);
+					if (field.get(rawData)==null) {
+						haveNull = true;
+					}
+				}	
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			if (!haveNull) {
+				TaxiTranData newData = new TaxiTranData();
+				GraftTraData.cvtLadTraData(rawData, newData);
+				this.cvtTaxiTranData(rawData, newData);
+				ds.taxiTranMapper.add(newData);
+			}
 			ds.rawTaxiTranMapper.add(rawData);
-			ds.taxiTranMapper.add(newData);
 		}
 		
 

@@ -1,5 +1,6 @@
 package app.cacheworker;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,13 +18,30 @@ public class RoadGoodsRunnable extends DataRunnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		@SuppressWarnings("unchecked")
 		List<RoadGoodsRawData> rgrdList = (ArrayList<RoadGoodsRawData>)dp.getData();
-		for(RoadGoodsRawData rgrd:rgrdList){
-			RoadGoodsData rogoData = new RoadGoodsData();
-			GraftTraData.cvtLadTraData(rgrd, rogoData);
-			this.cvtRoadGoodsData(rgrd, rogoData);
-			ds.rawRoadGoodsMapper.add(rgrd);
-			ds.roadGoodsMapper.add(rogoData);		
+		boolean haveNull;
+		for(RoadGoodsRawData rawData:rgrdList){
+			haveNull = false;
+			try {
+				for (Field field : rawData.getClass().getDeclaredFields()) {
+					field.setAccessible(true);
+					if (field.get(rawData)==null) {
+						haveNull = true;
+					}
+				}	
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			if (!haveNull) {
+				RoadGoodsData newData = new RoadGoodsData();
+				GraftTraData.cvtLadTraData(rawData, newData);
+				this.cvtRoadGoodsData(rawData, newData);
+				ds.roadGoodsMapper.add(newData);
+			}			
+			ds.rawRoadGoodsMapper.add(rawData);
+					
 		}
 
 	}

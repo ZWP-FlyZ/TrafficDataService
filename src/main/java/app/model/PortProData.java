@@ -12,8 +12,9 @@ public class PortProData {
 	private Double coal;
 	private Double power;
 	private Double other;
-	private Double entS;
+	private Integer entS;
 	private Double proTask;
+	private Double throughput;
 	public String getCompanyId() {
 		return companyId;
 	}
@@ -74,10 +75,10 @@ public class PortProData {
 	public void setOther(Double other) {
 		this.other = other;
 	}
-	public Double getEntS() {
+	public Integer getEntS() {
 		return entS;
 	}
-	public void setEntS(Double entS) {
+	public void setEntS(Integer entS) {
 		this.entS = entS;
 	}
 	public Double getProTask() {
@@ -85,6 +86,12 @@ public class PortProData {
 	}
 	public void setProTask(Double proTask) {
 		this.proTask = proTask;
+	}
+	public Double getThroughput() {
+		return throughput;
+	}
+	public void setThroughput(Double throughput) {
+		this.throughput = throughput;
 	}
 	
 	

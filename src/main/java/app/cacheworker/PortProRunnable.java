@@ -1,5 +1,6 @@
 package app.cacheworker;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,14 +17,30 @@ public class PortProRunnable extends DataRunnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		@SuppressWarnings("unchecked")
 		List<PortProRawData> pprdList = (ArrayList<PortProRawData>)dp.getData();
+		boolean haveNull;
 		for (PortProRawData rawData : pprdList) {
+			haveNull = false;
 			String compType = rawData.getTransType();
 			if (compType.equals("t8")) {
-				PortProData newData = new PortProData();
-				this.cvtPortProData(rawData, newData);
+				try {
+					for (Field field : rawData.getClass().getDeclaredFields()) {
+						field.setAccessible(true);
+						if (field.get(rawData)==null) {
+							haveNull = true;
+						}
+					}	
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+				}
+				if (!haveNull) {
+					PortProData newData = new PortProData();
+					this.cvtPortProData(rawData, newData);
+					ds.portProMapper.add(newData);
+				}
 				ds.rawPortProMapper.add(rawData);
-				ds.portProMapper.add(newData);
 			}else {
 				ds.rawShipComMapper.add(rawData);
 			}
@@ -40,7 +57,7 @@ public class PortProRunnable extends DataRunnable {
 		newData.setCoal(rawData.getCoal());
 		newData.setPower(rawData.getPower());
 		newData.setOther(rawData.getOther());
-		newData.setEntS(rawData.getThroughput());
+		newData.setThroughput(rawData.getThroughput());
 		newData.setProTask(rawData.getProTask());
 
 		String inTime = ConvertTool.decodeDate(rawData.getCountDate());

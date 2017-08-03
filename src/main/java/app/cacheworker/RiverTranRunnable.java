@@ -1,7 +1,9 @@
 package app.cacheworker;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+
 
 import app.model.CityInfoData;
 import app.model.RiverTranData;
@@ -16,13 +18,30 @@ public class RiverTranRunnable extends DataRunnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		@SuppressWarnings("unchecked")
 		List<RiverTranRawData> rtrdList = (ArrayList<RiverTranRawData>)dp.getData();
+		boolean haveNull;
 		for (RiverTranRawData rawData : rtrdList) {
-			RiverTranData newData = new RiverTranData();
-			GraftTraData.cvtWatTraData(rawData, newData);
-			this.cvtRiverTraData(rawData, newData);
+			haveNull = false;
+			try {
+				for (Field field : rawData.getClass().getDeclaredFields()) {
+					field.setAccessible(true);
+					if (field.get(rawData)==null) {
+						haveNull = true;
+					}
+				}	
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			if(!haveNull){
+				RiverTranData newData = new RiverTranData();
+				GraftTraData.cvtWatTraData(rawData, newData);
+				this.cvtRiverTraData(rawData, newData);
+				ds.riverTranMapper.add(newData);
+			}
 			ds.rawRiverTranMapper.add(rawData);
-			ds.riverTranMapper.add(newData);
+			
 			
 		}
 
