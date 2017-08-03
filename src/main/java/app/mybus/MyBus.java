@@ -14,8 +14,8 @@ public class MyBus {
 	@SuppressWarnings("rawtypes")
 	private final  Map<String,List<MyReceiver>> mReceivers = new HashMap<>();
 	private Thread mThread = null;
-	private final BlockingQueue<Object> msgQueue  = 
-								new LinkedBlockingQueue<Object>();
+	private final BlockingQueue<Message> msgQueue  = 
+								new LinkedBlockingQueue<Message>();
 	private MyBus(){
 		mThread = new Thread(mRunnable);
 		mThread.start();
@@ -27,28 +27,44 @@ public class MyBus {
 		return bus;
 	}
 	
-	public  <E> void regReceiver(MyReceiver<E> receiver,Class<E> msgType){
+	public  <E> void regReceiver(MyReceiver<E> receiver,String name){
 		@SuppressWarnings("rawtypes")
-		List<MyReceiver> lr = mReceivers.get(msgType.getName());
+		List<MyReceiver> lr = mReceivers.get(name);
 		if(lr==null)
 			lr = new ArrayList<>();
 		lr.add(receiver);
-		mReceivers.put(msgType.getName(), lr);
+		mReceivers.put(name, lr);
 	}
 	
 	
+	
+	
+	public  <E> void regReceiver(MyReceiver<E> receiver,Class<E> msgType){
+		regReceiver(receiver,msgType.getName());
+	}
+	
+	
+	public  void sendMessage(String name,Object message){	
+		if(message==null) return ;
+		msgQueue.offer(new Message(name,message));
+	}
 
 	public  void sendMessage(Object message){	
 		if(message==null) return ;
-		msgQueue.offer(message);
+		msgQueue.offer(new Message(message.getClass().getName(),message));
 	}
 	
-	public  <E> void unregReceiver(MyReceiver<E> receiver,Class<E> msgType){
+	public  <E> void unregReceiver(MyReceiver<E> receiver,String name){
 		@SuppressWarnings("rawtypes")
-		List<MyReceiver> lr = mReceivers.get(msgType.getName());
+		List<MyReceiver> lr = mReceivers.get(name);
 		if(lr!=null)
 			lr.remove(receiver);
 	}
+	
+	public  <E> void unregReceiver(MyReceiver<E> receiver,Class<E> msgType){
+		unregReceiver(receiver,msgType.getName());
+	}
+	
 	public static abstract class MyReceiver<E>{
 		protected abstract void onReceiver(E message);
 	}
@@ -60,12 +76,12 @@ public class MyBus {
 		public void run() {
 			while(true){
 			try {
-				Object msg = msgQueue.take();
+				Message msg = msgQueue.take();
 				@SuppressWarnings("rawtypes")
-				List<MyReceiver> lr = mReceivers.get(msg.getClass().getName());
+				List<MyReceiver> lr = mReceivers.get(msg.name);
 				if(lr==null)   continue;
 				for(@SuppressWarnings("rawtypes") MyReceiver r:lr){
-					r.onReceiver(msg);
+					r.onReceiver(msg.msg);
 				}
 				
 			} catch (InterruptedException e) {
@@ -79,6 +95,15 @@ public class MyBus {
 		
 	};
 	
-	
+	class Message{
+		String name;
+		Object msg;
+		public Message(String name,Object msg){
+			this.name = name;
+			this.msg = msg;
+		}
+	}
 
 }
+
+	

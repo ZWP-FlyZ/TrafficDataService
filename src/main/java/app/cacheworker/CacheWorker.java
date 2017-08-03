@@ -9,9 +9,11 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
+@Scope("prototype")
 public class CacheWorker implements InitializingBean{
 	
 	private final static int DATA_QUEUE_SIZE = 21;
@@ -58,6 +60,7 @@ public class CacheWorker implements InitializingBean{
 			while(true){
 				try {
 					DataPackage dp = dataQueue.take();
+					System.err.println(dp.getDataType());
 					DataRunnable dr = taskTypes.get(dp.getDataType()).newInstance();
 					dr.setDataService(dataService);
 					dr.setDataPackage(dp);

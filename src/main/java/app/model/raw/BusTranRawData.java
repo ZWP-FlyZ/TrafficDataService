@@ -3,20 +3,22 @@ package app.model.raw;
 public class BusTranRawData extends LadTraRawData {
 	
 	
-	private double PASSENGER_TURNOVER;
-	private double BUS_LENGTH;
+	private Double PASSENGER_TURNOVER;
+	private Double BUS_LENGTH;
 	
-	public double getPASSENGER_TURNOVER() {
+	public Double getPASSENGER_TURNOVER() {
 		return PASSENGER_TURNOVER;
 	}
-	public void setPASSENGER_TURNOVER(double pASSENGER_TURNOVER) {
+	public void setPASSENGER_TURNOVER(Double pASSENGER_TURNOVER) {
 		PASSENGER_TURNOVER = pASSENGER_TURNOVER;
 	}
-	public double getBUS_LENGTH() {
+	public Double getBUS_LENGTH() {
 		return BUS_LENGTH;
 	}
-	public void setBUS_LENGTH(double bUS_LENGTH) {
+	public void setBUS_LENGTH(Double bUS_LENGTH) {
 		BUS_LENGTH = bUS_LENGTH;
 	}
+	
+	
 
 }

@@ -2,13 +2,13 @@ package app.model;
 
 public class TaxiTranData extends LadTraData {
 
-	private double dpCot;
+	private Double dpCot;
 
-	public double getDpCot() {
+	public Double getDpCot() {
 		return dpCot;
 	}
 
-	public void setDpCot(double dpCot) {
+	public void setDpCot(Double dpCot) {
 		this.dpCot = dpCot;
 	}
 	

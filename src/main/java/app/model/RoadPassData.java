@@ -9,7 +9,7 @@ public class RoadPassData extends LadTraData {
 	public void setCarType(String carType) {
 		this.carType = carType;
 	}
-	public int getSitCot() {
+	public Integer getSitCot() {
 		return sitCot;
 	}
 	public void setSitCot(Integer sitCot) {

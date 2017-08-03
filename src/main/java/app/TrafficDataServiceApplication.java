@@ -3,10 +3,12 @@ package app;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Component;
 
 import app.cacheworker.BusTranRunnable;
 import app.cacheworker.DataPackage;
@@ -25,7 +27,11 @@ import app.model.raw.PortProRawData;
 import app.model.raw.RiverTranRawData;
 import app.model.raw.RoadGoodsRawData;
 import app.model.raw.RoadPassRawData;
+<<<<<<< HEAD
 import app.model.raw.TaxiTranRawData;
+=======
+import app.websocket.MyWebsocketClient;
+>>>>>>> 43e400a4de5f274dbd9f8b735afe3256235d0c1d
 
 
 @SpringBootApplication
@@ -40,6 +46,13 @@ public class TrafficDataServiceApplication implements CommandLineRunner  {
 	public static void main(String[] args) {
 		SpringApplication.run(TrafficDataServiceApplication.class, args);
 	}
+	
+	
+
+	
+	
+	
+	
 
 	@Override
 	public void run(String... arg0) throws Exception {

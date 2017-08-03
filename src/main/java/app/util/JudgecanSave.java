@@ -33,7 +33,6 @@ public class JudgecanSave {
 			for (Field field : cur_class.getDeclaredFields()) {
 				flag++;
 				field.setAccessible(true);
-				System.out.println(field.getName()+": "+field.get(obj));
 				if (field.get(obj)==null) {
 					if (flag>11&&flag<5) {
 						haveNull = true;
