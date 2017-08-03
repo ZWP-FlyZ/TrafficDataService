@@ -12,8 +12,8 @@ public class CpWords {
 	public final static String TYPE_RESUME_REQ = "resume_req";//
 	public final static String TYPE_RESUME_RESP = "resume_resp";//
 	
-	public final static String TYPE_HEART_BEAT_REQ = "resume_req";//
-	public final static String TYPE_HEART_BEAT_RESP = "resume_resp";//
+	public final static String TYPE_HEART_BEAT_REQ = "heart_beat";//
+	public final static String TYPE_HEART_BEAT_RESP = "heart_beat";//
 	
 	public final static String TYPE_DATA_REQ = "nh_jc_traffic_33_req";//
 	public final static String TYPE_DATA_RESP = "nh_jc_traffic_33_resp";//
@@ -26,5 +26,5 @@ public class CpWords {
 	public final static String BIZ_RIVER = "nh_ys";
 	public final static String BIZ_OCEAN_GOODS = "hy_hy";
 	public final static String BIZ_OCEAN_PASS = "hy_ky";
-	public final static String BIZ_PROT_PRODUCE = "gk_sc";
+	public final static String BIZ_PORT_PRODUCE = "gk_sc";
 }

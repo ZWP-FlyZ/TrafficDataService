@@ -17,6 +17,7 @@ public class TrafficDataServiceApplicationTests {
 	@Autowired
 	MyWebsocketClient wc;
 	
+	
 	@Test
 	public void testGetCityInfo(){
 		wc.connect();

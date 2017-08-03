@@ -3,7 +3,7 @@ package app.websocket.yuntu.model;
 public class CpProtocalInfo {
 	
 	private Certificate certificate;
-	private int result;
+	private Integer result;
 	private String session_id;
 	public Certificate getCertificate() {
 		return certificate;
@@ -11,10 +11,10 @@ public class CpProtocalInfo {
 	public void setCertificate(Certificate certificate) {
 		this.certificate = certificate;
 	}
-	public int getResult() {
+	public Integer getResult() {
 		return result;
 	}
-	public void setResult(int result) {
+	public void setResult(Integer result) {
 		this.result = result;
 	}
 	public String getSession_id() {

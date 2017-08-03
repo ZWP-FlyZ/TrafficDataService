@@ -1,11 +1,8 @@
 package service.app;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 import app.mybus.MyBus;
-import app.websocket.yuntu.model.CpData;
 
 public class MyBusTest {
 

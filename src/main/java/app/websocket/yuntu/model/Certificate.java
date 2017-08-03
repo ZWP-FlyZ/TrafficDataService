@@ -1,14 +1,13 @@
 package app.websocket.yuntu.model;
 
 public class Certificate {
-	private String check;
-	private CInfo info;
 	
+	private CInfo info;
+	private String check;
 	
 	public String getCheck() {
 		return check;
 	}
-
 
 	public void setCheck(String check) {
 		this.check = check;
@@ -26,7 +25,7 @@ public class Certificate {
 
 
 	static class CInfo{
-		public Integer version;
+		public Integer ver;
 		public String sn;
 		public String user;
 		public String begin;
@@ -34,6 +33,7 @@ public class Certificate {
 		public String area;
 		public String ip;
 		public String idlist;
+		public String subscribe;
 		public String notify;
 		public String send;
 		public Integer limit;
