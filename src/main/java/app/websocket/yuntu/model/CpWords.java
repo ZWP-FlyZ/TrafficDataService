@@ -27,4 +27,18 @@ public class CpWords {
 	public final static String BIZ_OCEAN_GOODS = "hy_hy";
 	public final static String BIZ_OCEAN_PASS = "hy_ky";
 	public final static String BIZ_PORT_PRODUCE = "gk_sc";
+	
+	
+	public final static String RESP_MSG_OK = "OK";
+	public final static String RESP_MSG_WAIT_NEXT = "WAIT_NEXT";
+	public final static String RESP_MSG_WAIT_REPEAT = "WAIT_REPEAT";
+	public final static String RESP_MSG_WRONG_INDEX = "WRONG_INDEX";
+	
+	public final static int RESP_ECODE_OK = 10;
+	public final static int RESP_ECODE_WAIT_NEXT = 11;
+	public final static int RESP_ECODE_WAIT_REPEAT = 12;
+	public final static int RESP_ECODE_WRONG_INDEX = 13;
+	
+	
+	
 }

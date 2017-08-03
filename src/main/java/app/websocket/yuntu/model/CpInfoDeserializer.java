@@ -76,15 +76,23 @@ public class CpInfoDeserializer implements JsonDeserializer<CpData>  {
 			
 			cpData.setInfo(di);
 		}//end  data
-				
-		if(CpWords.METHOD_REGISTER.equals(cpData.getMethod())){
+		else {
 			CpProtocalInfo ci = new CpProtocalInfo();
 			if((je=infoJ.get("result"))!=null)
 				ci.setResult( je.getAsInt());
 			if((je=infoJ.get("session_id"))!=null)
 				ci.setSession_id( je.getAsString());
 			cpData.setInfo(ci);
-		}//end reg resp
+		}
+				
+//		if(CpWords.METHOD_REGISTER.equals(cpData.getMethod())){
+//			CpProtocalInfo ci = new CpProtocalInfo();
+//			if((je=infoJ.get("result"))!=null)
+//				ci.setResult( je.getAsInt());
+//			if((je=infoJ.get("session_id"))!=null)
+//				ci.setSession_id( je.getAsString());
+//			cpData.setInfo(ci);
+//		}//end reg resp
 		return cpData;
 	}
 

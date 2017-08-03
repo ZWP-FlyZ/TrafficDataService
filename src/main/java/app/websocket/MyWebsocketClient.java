@@ -3,6 +3,9 @@ package app.websocket;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.channels.NotYetConnectedException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import org.hamcrest.xml.HasXPath;
 import org.java_websocket.client.WebSocketClient;
@@ -32,25 +35,28 @@ public class MyWebsocketClient extends WebSocketClient implements InitializingBe
 
 	private final static String CP_IP = "121.40.30.88";
 	private final static int CP_PORT =8080;
+	private final static int HEART_BEAT_DELAY = 60;
+	private final static int CLIENT_MISSED_COT = 2;
+	
 	
 	private final static String MYBUS_SELF_NAME = "websocket";
 	private final static String MYBUS_TANGER_NAME = "main";
 	
 	private final CpClient client = new CpClient();
-	
 	private final CpData regData = new CpData();
 	private final CpData heartBeat = new CpData();
 	
-	 private final static Logger logger = LoggerFactory.getLogger(MyWebsocketClient.class); 
+	private final RunData rd = new RunData();
+	ScheduledExecutorService scheduledThreadPool = Executors.newScheduledThreadPool(1);
+	
+	private final static Logger logger = LoggerFactory.getLogger(MyWebsocketClient.class);
+	 
 	 
 	private static Gson gson ;
 	
 	public MyWebsocketClient() throws URISyntaxException{
 		super(new URI("ws://"+CP_IP+":"+CP_PORT));
-		MyBus.getMainBus().regReceiver(receiver, MYBUS_SELF_NAME);
-		GsonBuilder gsonBuilder = new GsonBuilder();
-		gsonBuilder.registerTypeAdapter(CpData.class, new CpInfoDeserializer());
-		gson = gsonBuilder.create();
+
 	}
 	
 	@Override
@@ -66,6 +72,7 @@ public class MyWebsocketClient extends WebSocketClient implements InitializingBe
 		// TODO Auto-generated method stub
 		String json = gson.toJson(msg);
 		logger.error("send json = "+json);
+		//System.err.println(json);
 		super.send(json);
 	}
 	
@@ -73,23 +80,32 @@ public class MyWebsocketClient extends WebSocketClient implements InitializingBe
 	public void onMessage(String message) {
 		// TODO Auto-generated method stub
 		CpData c = gson.fromJson(message, CpData.class);
-		logger.error("send json = "+message);
+		logger.error("get json = "+message);
 		if(CpWords.TYPE_DATA_REQ.equals(c.getType()))
 			MyBus.getMainBus().sendMessage(MYBUS_TANGER_NAME, c);
 		
 		
 		else if(CpWords.TYPE_HEART_BEAT_RESP.equals(c.getType())){
-			
-			
-			
+			//System.err.println("get heart beat");
+			CpProtocalInfo info = (CpProtocalInfo) c.getInfo();
+			if(info.getResult()==0x0){
+				rd.isLive = true;
+				rd.cot = 0;
+			}else
+				System.err.println("useless heart beat");
+
 		}
 		
 		else if(CpWords.TYPE_REGISTER_RESP.equals(c.getType())){
 			CpProtocalInfo info = (CpProtocalInfo) c.getInfo();
 			if(info.getResult() == 0x0){
-				//do some after reg
+				client.setSession_id(info.getSession_id());
+				client.setStatus(CpClient.CLIENT_STATUS_REGED);
+				scheduledThreadPool.scheduleAtFixedRate(runable, 10, 
+							HEART_BEAT_DELAY,TimeUnit.SECONDS);
 			}else{
 				logger.error("reg err = "+ Integer.toHexString(info.getResult()));
+				
 			}
 		}
 		
@@ -114,12 +130,57 @@ public class MyWebsocketClient extends WebSocketClient implements InitializingBe
 		@Override
 		protected void onReceiver(CpData message) {
 			// TODO Auto-generated method stub
-			send(gson.toJson(message));
+			send(message);
 		}};
+	
+	
+	class RunData{
+		boolean isLive = true;
+		int cot = 0;
+	}
+		
+		
+	Runnable runable = new Runnable() {
+		
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			if(CpClient.CLIENT_STATUS_REGED.equals(client.getStatus())){
+				heartBeat.setFrom(client.getSession_id());
+				heartBeat.setCall_id(CpTools.getUUID());
+				send(heartBeat);
+				
+			}
+			
+			if(!rd.isLive){
+				if(rd.cot>=CLIENT_MISSED_COT){
+					client.setStatus(CpClient.CLIENT_STATUS_MISSED);
+				}else
+					rd.cot += 1;
+				logger.error("client missing ..."+rd.cot);
+			}
+			
+			if(CpClient.CLIENT_STATUS_MISSED.equals(client.getStatus())){
+				logger.error("client miss");
+				scheduledThreadPool.shutdown();
+			}
+			
+			rd.isLive= false;
+
+		}
+	};
+	
+	
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		// TODO Auto-generated method stub
+		
+		MyBus.getMainBus().regReceiver(receiver, MYBUS_SELF_NAME);
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.registerTypeAdapter(CpData.class, new CpInfoDeserializer());
+		gson = gsonBuilder.create();
+		
 		String cerJson = 
 				CpTools.readJsonFile("src/main/java/app/websocket/yuntu/model/certificate.json");
 		
@@ -136,7 +197,7 @@ public class MyWebsocketClient extends WebSocketClient implements InitializingBe
 		heartBeat.setMethod(CpWords.METHOD_INFO);
 		heartBeat.setType(CpWords.TYPE_HEART_BEAT_REQ);
 		
-		this.connect();
+		//this.connect();
 		
 	}
 
