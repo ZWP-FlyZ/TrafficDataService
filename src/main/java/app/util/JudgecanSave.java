@@ -15,7 +15,7 @@ public class JudgecanSave {
 		try {
 			for (Field field : cur_class.getDeclaredFields()) {
 				field.setAccessible(true);
-				logger.debug(field.getName()+": "+field.get(obj));
+				//logger.debug(field.getName()+": "+field.get(obj));
 				if (field.get(obj)==null) {
 					haveNull = true;
 				}

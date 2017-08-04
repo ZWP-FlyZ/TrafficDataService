@@ -67,7 +67,8 @@ public class MyWebsocketClient extends WebSocketClient implements InitializingBe
 	public void send(Object msg)  {
 		// TODO Auto-generated method stub
 		String json = gson.toJson(msg);
-		logger.debug("send json = "+json);
+		if(!json.contains(CpWords.TYPE_HEART_BEAT_REQ))
+			logger.info("send json = "+json);
 		//System.err.println(json);
 		super.send(json);
 	}
@@ -76,7 +77,8 @@ public class MyWebsocketClient extends WebSocketClient implements InitializingBe
 	public void onMessage(String message) {
 		// TODO Auto-generated method stub
 		CpData c = gson.fromJson(message, CpData.class);
-		logger.debug("get json = "+message);
+		if(!message.contains(CpWords.TYPE_HEART_BEAT_REQ))
+			logger.info("get json = "+message);
 		if(CpWords.TYPE_DATA_REQ.equals(c.getType()))
 			MyBus.getMainBus().sendMessage(MYBUS_TANGER_NAME, c);
 		
@@ -179,7 +181,7 @@ public class MyWebsocketClient extends WebSocketClient implements InitializingBe
 		gson = gsonBuilder.create();
 		
 		String cerJson = 
-				CpTools.readJsonFile("src/main/java/app/websocket/yuntu/model/certificate.json");
+				CpTools.readJsonFile("/app/websocket/yuntu/model/certificate.json");
 		
 		client.setCertificate(gson.fromJson(cerJson, Certificate.class));
 		client.setStatus(CpClient.CLIENT_STATUS_CLOSED);

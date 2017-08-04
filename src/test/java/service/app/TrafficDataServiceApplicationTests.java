@@ -26,9 +26,6 @@ public class TrafficDataServiceApplicationTests {
 	@Test
 	public void testGetCityInfo(){
 		
-		String json =CpTools.readJsonFile("src/test/java/service/app/TestJson.json");
-		
-		wc.onMessage(json);
 		
 	}
 	

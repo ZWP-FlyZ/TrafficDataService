@@ -23,9 +23,6 @@ public class TrafficDataServiceApplication implements CommandLineRunner  {
 		SpringApplication.run(TrafficDataServiceApplication.class, args);
 	}
 	
-	
-
-
 
 	@Override
 	public void run(String... arg0) throws Exception {

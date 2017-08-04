@@ -11,7 +11,7 @@ public class CpTools {
 		StringBuffer sb = new StringBuffer();
 		BufferedReader br;
 		try {
-			br = new BufferedReader(new InputStreamReader(new FileInputStream(filename),"UTF-8"));
+			br = new BufferedReader(new InputStreamReader(CpTools.class.getResourceAsStream(filename),"UTF-8"));
 			String line = null;
 			while ((line = br.readLine()) != null) {
 			      sb.append(line);
