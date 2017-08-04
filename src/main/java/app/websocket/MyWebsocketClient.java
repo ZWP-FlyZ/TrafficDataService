@@ -2,12 +2,10 @@ package app.websocket;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.channels.NotYetConnectedException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import org.hamcrest.xml.HasXPath;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 import org.slf4j.Logger;
@@ -17,14 +15,12 @@ import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.internal.LinkedTreeMap;
 
 import app.mybus.MyBus;
 import app.util.CpTools;
 import app.websocket.yuntu.model.Certificate;
 import app.websocket.yuntu.model.CpClient;
 import app.websocket.yuntu.model.CpData;
-import app.websocket.yuntu.model.CpDataInfo;
 import app.websocket.yuntu.model.CpInfoDeserializer;
 import app.websocket.yuntu.model.CpProtocalInfo;
 import app.websocket.yuntu.model.CpWords;
@@ -62,7 +58,7 @@ public class MyWebsocketClient extends WebSocketClient implements InitializingBe
 	@Override
 	public void onOpen(ServerHandshake handshakedata) {
 		// TODO Auto-generated method stub
-		logger.error("onopen");
+		logger.info("websocket open");
 		regData.setCall_id(CpTools.getUUID());
 		send(regData);
 	}
@@ -71,7 +67,7 @@ public class MyWebsocketClient extends WebSocketClient implements InitializingBe
 	public void send(Object msg)  {
 		// TODO Auto-generated method stub
 		String json = gson.toJson(msg);
-		logger.error("send json = "+json);
+		logger.debug("send json = "+json);
 		//System.err.println(json);
 		super.send(json);
 	}
@@ -80,7 +76,7 @@ public class MyWebsocketClient extends WebSocketClient implements InitializingBe
 	public void onMessage(String message) {
 		// TODO Auto-generated method stub
 		CpData c = gson.fromJson(message, CpData.class);
-		logger.error("get json = "+message);
+		logger.debug("get json = "+message);
 		if(CpWords.TYPE_DATA_REQ.equals(c.getType()))
 			MyBus.getMainBus().sendMessage(MYBUS_TANGER_NAME, c);
 		
@@ -99,6 +95,7 @@ public class MyWebsocketClient extends WebSocketClient implements InitializingBe
 		else if(CpWords.TYPE_REGISTER_RESP.equals(c.getType())){
 			CpProtocalInfo info = (CpProtocalInfo) c.getInfo();
 			if(info.getResult() == 0x0){
+				logger.info("session_id = "+info.getSession_id());
 				client.setSession_id(info.getSession_id());
 				client.setStatus(CpClient.CLIENT_STATUS_REGED);
 				scheduledThreadPool.scheduleAtFixedRate(runable, 10, 
@@ -197,7 +194,7 @@ public class MyWebsocketClient extends WebSocketClient implements InitializingBe
 		heartBeat.setMethod(CpWords.METHOD_INFO);
 		heartBeat.setType(CpWords.TYPE_HEART_BEAT_REQ);
 		
-		//this.connect();
+		this.connect();
 		
 	}
 

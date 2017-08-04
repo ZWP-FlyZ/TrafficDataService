@@ -2,14 +2,20 @@ package app.util;
 
 import java.lang.reflect.Field;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class JudgecanSave {
 
+	
+	private static Logger logger = LoggerFactory.getLogger(JudgecanSave.class);
+	
 	@SuppressWarnings("rawtypes")
 	public static boolean JudgeNull(Class cur_class,Object obj,boolean haveNull){
 		try {
 			for (Field field : cur_class.getDeclaredFields()) {
 				field.setAccessible(true);
-				System.out.println(field.getName()+": "+field.get(obj));
+				logger.debug(field.getName()+": "+field.get(obj));
 				if (field.get(obj)==null) {
 					haveNull = true;
 				}

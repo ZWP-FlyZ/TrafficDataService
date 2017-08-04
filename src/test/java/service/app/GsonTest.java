@@ -15,12 +15,10 @@ import com.google.gson.GsonBuilder;
 
 import app.model.raw.BusTranRawData;
 import app.util.CpTools;
-import app.websocket.yuntu.model.Certificate;
 import app.websocket.yuntu.model.CpData;
 import app.websocket.yuntu.model.CpDataInfo;
 import app.websocket.yuntu.model.CpInfoDeserializer;
 import app.websocket.yuntu.model.CpMutilData;
-import app.websocket.yuntu.model.CpProtocalInfo;
 import app.websocket.yuntu.model.CpWords;
 
 
@@ -44,19 +42,22 @@ public class GsonTest {
 		
 		List<BusTranRawData> ss = new ArrayList<>();
 		
-		for(int i=0;i<10;i++){
+		for(int i=1;i<10;i++){
 			BusTranRawData d = new BusTranRawData();
-			d.setPASSENGER_TURNOVER(new Double(i));
-			d.setPLATE_NUMBER("车牌号"+i);
+			d.setPLATE_NUMBER("car"+i);
+			
 			d.setREPORT_TIME("201701");
 			d.setINDUSTRY("t3");
-			d.setAREA_NAME("330101");
+			d.setAREA_NAME("330102");
 			d.setCOMPANY_ID("123123123");
+			d.setVEHICLE_SUM(new Double(i));
+			
 			d.setFUEL_TYPE("f3");
 			d.setTOTAL_FUEL((double)i);
 			d.setPASSENGER_TURNOVER((double)i +1);
-			d.setVEHICLE_SUM(new Double(i));
+			d.setBUS_LENGTH((double)i);
 			d.setRANGE_ABILITY(new Double(i));
+			
 			ss.add(d);
 		}
 		

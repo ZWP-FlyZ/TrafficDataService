@@ -7,6 +7,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -16,14 +18,17 @@ import org.springframework.stereotype.Component;
 @Scope("prototype")
 public class CacheWorker implements InitializingBean{
 	
-	private final static int DATA_QUEUE_SIZE = 21;
+	private final static int DATA_QUEUE_SIZE = 31;
 	private final static int THREAD_SIZE = 10;
 	private final  BlockingQueue<DataPackage> dataQueue = 
-							new LinkedBlockingQueue<DataPackage>(DATA_QUEUE_SIZE+ 10);
+							new LinkedBlockingQueue<DataPackage>(DATA_QUEUE_SIZE+ 20);
 	private final  Map<String,Class<? extends DataRunnable>> taskTypes = new HashMap<>();
 	private final ExecutorService  threadPool = Executors.newFixedThreadPool(THREAD_SIZE);
 	private  Thread mThread;
 	
+	
+	
+	private static Logger logger = LoggerFactory.getLogger(CacheWorker.class);
 	@Autowired
 	DataService dataService;
 	
@@ -39,12 +44,16 @@ public class CacheWorker implements InitializingBean{
 	}
 	
 	public int putData(DataPackage dp) throws InterruptedException{
-		dataQueue.put(dp);
+		
 		int size = dataQueue.size();
-		if(size<DATA_QUEUE_SIZE-1)// next ok
+		if(size<DATA_QUEUE_SIZE-1){
+			dataQueue.put(dp);
 			return 0;
-		else if(size==DATA_QUEUE_SIZE-1)//wait_next
+		}// next ok
+		else if(size==DATA_QUEUE_SIZE-1){
+			dataQueue.put(dp);
 			return 1;
+		}//wait_next
 		else
 			return -1;	
 	}
@@ -60,7 +69,7 @@ public class CacheWorker implements InitializingBean{
 			while(true){
 				try {
 					DataPackage dp = dataQueue.take();
-					System.err.println(dp.getDataType());
+					logger.debug(dp.getDataType());
 					DataRunnable dr = taskTypes.get(dp.getDataType()).newInstance();
 					dr.setDataService(dataService);
 					dr.setDataPackage(dp);
