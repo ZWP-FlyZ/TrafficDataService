@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import app.model.raw.BusTranRawData;
+import app.util.CpTools;
 import app.websocket.yuntu.model.Certificate;
 import app.websocket.yuntu.model.CpData;
 import app.websocket.yuntu.model.CpDataInfo;
@@ -35,41 +36,48 @@ public class GsonTest {
 		gsonBuilder.registerTypeAdapter(CpData.class, new CpInfoDeserializer());
 		gson = gsonBuilder.create();
 		
-//		cd.setMethod(CpWords.METHOD_INFO);
-//		cd.setType(CpWords.TYPE_DATA_REQ);
-//		cd.setFrom("{0B51951A-DE70-43BF-B31D-D1C6FB15E4DD}");
-//		cd.setTo("{0B51951A-DE70-43BF-B31D-D1C6FB15E4DD}");
-//		cd.setCall_id("7237b02c-4df3-3c0d-496d-ec2984b5ee5e");
-//		
-//		List<BusTranRawData> ss = new ArrayList<>();
-//		
-//		for(int i=0;i<100;i++){
-//			BusTranRawData d = new BusTranRawData();
-//			d.setPASSENGER_TURNOVER(i);
-//			d.setPLATE_NUMBER(""+i);
-//			d.setREPORT_TIME("date"+i);
-//			d.setBUS_LENGTH(i);
-//			ss.add(d);
-//		}
-//		
-//		CpMutilData md = new CpMutilData();
-//		
-//		md.setTaskId("taskId");
-//		md.setTotalPackage(10);
-//		md.setPackageIndex(1);
-//		md.setPackageSize(100);
-//		md.setTotalData(1000);
-//		
-//		CpDataInfo di = new CpDataInfo();
-//		di.setDoc("doc1");
-//		di.setVer("1.0");
-//		di.setBiz(CpWords.BIZ_BUS);
-//		di.setData(ss);
-//		di.setMutil(md);
-//		
-//		cd.setInfo(di);
-//		
-//		System.err.println(gson.toJson(cd));
+		cd.setMethod(CpWords.METHOD_INFO);
+		cd.setType(CpWords.TYPE_DATA_REQ);
+		cd.setFrom("{0B51951A-DE70-43BF-B31D-D1C6FB15E4DD}");
+		cd.setTo("{1B51951A-DE70-43BF-B31D-D1C6FB15E4DD}");
+		cd.setCall_id(CpTools.getUUID());
+		
+		List<BusTranRawData> ss = new ArrayList<>();
+		
+		for(int i=0;i<10;i++){
+			BusTranRawData d = new BusTranRawData();
+			d.setPASSENGER_TURNOVER(new Double(i));
+			d.setPLATE_NUMBER("车牌号"+i);
+			d.setREPORT_TIME("201701");
+			d.setINDUSTRY("t3");
+			d.setAREA_NAME("330101");
+			d.setCOMPANY_ID("123123123");
+			d.setFUEL_TYPE("f3");
+			d.setTOTAL_FUEL((double)i);
+			d.setPASSENGER_TURNOVER((double)i +1);
+			d.setVEHICLE_SUM(new Double(i));
+			d.setRANGE_ABILITY(new Double(i));
+			ss.add(d);
+		}
+		
+		CpMutilData md = new CpMutilData();
+		
+		md.setTaskId("taskId");
+		md.setTotalPackage(10);
+		md.setPackageIndex(1);
+		md.setPackageSize(10);
+		md.setTotalData(1000);
+		
+		CpDataInfo di = new CpDataInfo();
+		di.setDoc("doc1");
+		di.setVer("1.0");
+		di.setBiz(CpWords.BIZ_BUS);
+		di.setData(ss);
+		di.setMutil(md);
+		
+		cd.setInfo(di);
+		
+		System.err.println(gson.toJson(cd));
 		
 		
 		
