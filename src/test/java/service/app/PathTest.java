@@ -1,7 +1,5 @@
 package service.app;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 import app.util.CpTools;
