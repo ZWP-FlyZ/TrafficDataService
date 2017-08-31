@@ -5,6 +5,11 @@ package app.cacheworker;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.gson.Gson;
+
 import app.model.CityInfoData;
 import app.model.RoadPassData;
 import app.model.raw.RoadPassRawData;
@@ -18,6 +23,7 @@ public class RoadPassRunnable extends DataRunnable {
 	private DataService ds;
 	
 
+	private final static  Logger logger = LoggerFactory.getLogger("DataRunnable");
 	
 	@Override
 	public void run() {
@@ -26,17 +32,24 @@ public class RoadPassRunnable extends DataRunnable {
 		List<RoadPassRawData>  rprdList = (ArrayList<RoadPassRawData>)dp.getData();
 		boolean haveNull;
 		for(RoadPassRawData rawData:rprdList){
-			haveNull = false;
-			haveNull = JudgecanSave.JudgeNull(rawData.getClass(), rawData, haveNull);
 			
-			if (!haveNull) {
-				RoadPassData newData = new RoadPassData();
-				GraftTraData.cvtLadTraData(rawData, newData);
-				this.cvtRoadPassData(rawData, newData);
-				ds.roadPassMapper.add(newData);
-			}		
-			ds.rawRoadPassMapper.add(rawData);			
-		
+			try {
+				haveNull = false;
+				haveNull = JudgecanSave.JudgeNull(rawData.getClass(), rawData, haveNull);
+				
+				if (!haveNull) {
+					RoadPassData newData = new RoadPassData();
+					GraftTraData.cvtLadTraData(rawData, newData);
+					this.cvtRoadPassData(rawData, newData);
+					ds.roadPassMapper.add(newData);
+				}		
+				ds.rawRoadPassMapper.add(rawData);
+			} catch (Exception e) {
+				// TODO: handle exception
+				String es = "exec data err: " +new Gson().toJson(rawData);
+				logger.error(es,e);
+			}
+			
 		}
 	}
 

@@ -3,6 +3,11 @@ package app.cacheworker;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.gson.Gson;
+
 import app.model.BusTranData;
 import app.model.CityInfoData;
 import app.model.raw.BusTranRawData;
@@ -14,7 +19,7 @@ public class BusTranRunnable extends DataRunnable {
 	private DataPackage dp;
 	private DataService ds;
 	
-	
+	private final static  Logger logger = LoggerFactory.getLogger("DataRunnable");
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
@@ -22,15 +27,24 @@ public class BusTranRunnable extends DataRunnable {
 		List<BusTranRawData> btrdList = (ArrayList<BusTranRawData>)dp.getData();
 		boolean haveNull;
 		for (BusTranRawData rawData : btrdList) {
-			haveNull = false;
-			haveNull = JudgecanSave.JudgeNull(rawData.getClass(), rawData, haveNull);
-			if (!haveNull) {
-				BusTranData newData = new BusTranData();
-				GraftTraData.cvtLadTraData(rawData, newData);
-				this.cvtBusTranData(rawData, newData);
-				ds.busTranMapper.add(newData);
+			
+			
+			try {
+				haveNull = false;
+				haveNull = JudgecanSave.JudgeNull(rawData.getClass(), rawData, haveNull);
+				if (!haveNull) {
+					BusTranData newData = new BusTranData();
+					GraftTraData.cvtLadTraData(rawData, newData);
+					this.cvtBusTranData(rawData, newData);
+					ds.busTranMapper.add(newData);
+				}
+				ds.rawBusTranMapper.add(rawData);
+			} catch (Exception e) {
+				// TODO: handle exception
+				String es = "exec data err: " +new Gson().toJson(rawData);
+				logger.error(es,e);
 			}
-			ds.rawBusTranMapper.add(rawData);
+		
 		}
 
 	}

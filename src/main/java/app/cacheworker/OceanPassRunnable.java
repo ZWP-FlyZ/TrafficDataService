@@ -3,6 +3,11 @@ package app.cacheworker;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.gson.Gson;
+
 import app.model.CityInfoData;
 import app.model.OceanPassData;
 import app.model.raw.OceanPassRawData;
@@ -14,6 +19,8 @@ public class OceanPassRunnable extends DataRunnable {
 	private DataPackage dp;
 	private DataService ds;
 	
+	private final static  Logger logger = LoggerFactory.getLogger("DataRunnable");
+	
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
@@ -22,16 +29,21 @@ public class OceanPassRunnable extends DataRunnable {
 		boolean haveNull;
 		for (OceanPassRawData rawData : oprdList) {
 			haveNull = false;
-			haveNull = JudgecanSave.JudgeNull(rawData.getClass(), rawData, haveNull);
 			
-			
-			if(!haveNull){
-				OceanPassData newData = new OceanPassData();
-				GraftTraData.cvtWatTraData(rawData, newData);
-				this.cvtOceanPassData(rawData, newData);
-				ds.oceanPassMapper.add(newData);
+			try {
+				haveNull = JudgecanSave.JudgeNull(rawData.getClass(), rawData, haveNull);
+				if(!haveNull){
+					OceanPassData newData = new OceanPassData();
+					GraftTraData.cvtWatTraData(rawData, newData);
+					this.cvtOceanPassData(rawData, newData);
+					ds.oceanPassMapper.add(newData);
+				}
+				ds.rawOceanPassMapper.add(rawData);
+			} catch (Exception e) {
+				// TODO: handle exception
+				String es = "exec data err: " +new Gson().toJson(rawData);
+				logger.error(es,e);
 			}
-			ds.rawOceanPassMapper.add(rawData);
 		}
 
 	}

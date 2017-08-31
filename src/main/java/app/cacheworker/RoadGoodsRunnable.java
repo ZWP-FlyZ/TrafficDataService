@@ -3,6 +3,11 @@ package app.cacheworker;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.gson.Gson;
+
 import app.model.CityInfoData;
 import app.model.RoadGoodsData;
 import app.model.raw.RoadGoodsRawData;
@@ -14,6 +19,7 @@ public class RoadGoodsRunnable extends DataRunnable {
 	private DataPackage dp;
 	private DataService ds;
 	
+	private final static  Logger logger = LoggerFactory.getLogger("DataRunnable");
 	
 	@Override
 	public void run() {
@@ -22,17 +28,23 @@ public class RoadGoodsRunnable extends DataRunnable {
 		List<RoadGoodsRawData> rgrdList = (ArrayList<RoadGoodsRawData>)dp.getData();
 		boolean haveNull;
 		for(RoadGoodsRawData rawData:rgrdList){
-			haveNull = false;
 			
-			haveNull = JudgecanSave.JudgeNull(rawData.getClass(), rawData, haveNull);
-			if (!haveNull) {
-				RoadGoodsData newData = new RoadGoodsData();
-				GraftTraData.cvtLadTraData(rawData, newData);
-				this.cvtRoadGoodsData(rawData, newData);
-				ds.roadGoodsMapper.add(newData);
-			}			
-			ds.rawRoadGoodsMapper.add(rawData);
-					
+			try {
+				haveNull = false;
+				haveNull = JudgecanSave.JudgeNull(rawData.getClass(), rawData, haveNull);
+				if (!haveNull) {
+					RoadGoodsData newData = new RoadGoodsData();
+					GraftTraData.cvtLadTraData(rawData, newData);
+					this.cvtRoadGoodsData(rawData, newData);
+					ds.roadGoodsMapper.add(newData);
+				}			
+				ds.rawRoadGoodsMapper.add(rawData);
+			} catch (Exception e) {
+				// TODO: handle exception
+				String es = "exec data err: " +new Gson().toJson(rawData);
+				logger.error(es,e);
+			}
+						
 		}
 
 	}
