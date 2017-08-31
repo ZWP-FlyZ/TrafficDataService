@@ -3,6 +3,11 @@ package app.cacheworker;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.gson.Gson;
+
 import app.model.CityInfoData;
 import app.model.PortProData;
 import app.model.raw.PortProRawData;
@@ -14,6 +19,7 @@ public class PortProRunnable extends DataRunnable {
 	private DataPackage dp;
 	private DataService ds;
 	
+	private final static  Logger logger = LoggerFactory.getLogger("DataRunnable");
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
@@ -21,21 +27,26 @@ public class PortProRunnable extends DataRunnable {
 		List<PortProRawData> pprdList = (ArrayList<PortProRawData>)dp.getData();
 		boolean haveNull;
 		for (PortProRawData rawData : pprdList) {
-			haveNull = false;
-			String compType = rawData.getTransType();
-			if (compType.equals("t8")) {
-				haveNull = JudgecanSave.JudgePortProNull(rawData.getClass(), rawData, haveNull);
-				if (!haveNull) {
-					PortProData newData = new PortProData();
-					this.cvtPortProData(rawData, newData);
-					ds.portProMapper.add(newData);
+			
+			try {
+				haveNull = false;
+				String compType = rawData.getTransType();
+				if (compType.equals("t8")) {
+					haveNull = JudgecanSave.JudgePortProNull(rawData.getClass(), rawData, haveNull);
+					if (!haveNull) {
+						PortProData newData = new PortProData();
+						this.cvtPortProData(rawData, newData);
+						ds.portProMapper.add(newData);
+					}
+					ds.rawPortProMapper.add(rawData);
+				}else {
+					ds.rawShipComMapper.add(rawData);
 				}
-				ds.rawPortProMapper.add(rawData);
-			}else {
-				ds.rawShipComMapper.add(rawData);
-			}
-			
-			
+			} catch (Exception e) {
+				// TODO: handle exception
+				String es = "exec data err: " +new Gson().toJson(rawData);
+				logger.error(es,e);
+			}			
 		}
 
 	}

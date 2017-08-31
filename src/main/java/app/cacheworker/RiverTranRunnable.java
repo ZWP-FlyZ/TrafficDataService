@@ -3,6 +3,10 @@ package app.cacheworker;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.gson.Gson;
 
 import app.model.CityInfoData;
 import app.model.RiverTranData;
@@ -15,6 +19,8 @@ public class RiverTranRunnable extends DataRunnable {
 	private DataPackage dp;
 	private DataService ds;
 	
+	private final static  Logger logger = LoggerFactory.getLogger("DataRunnable");
+	
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
@@ -22,17 +28,22 @@ public class RiverTranRunnable extends DataRunnable {
 		List<RiverTranRawData> rtrdList = (ArrayList<RiverTranRawData>)dp.getData();
 		boolean haveNull;
 		for (RiverTranRawData rawData : rtrdList) {
-			haveNull = false;
-			haveNull = JudgecanSave.JudgeNull(rawData.getClass(), rawData, haveNull);
-			if(!haveNull){
-				RiverTranData newData = new RiverTranData();
-				GraftTraData.cvtWatTraData(rawData, newData);
-				this.cvtRiverTraData(rawData, newData);
-				ds.riverTranMapper.add(newData);
-			}
-			ds.rawRiverTranMapper.add(rawData);
 			
-			
+			try {
+				haveNull = false;
+				haveNull = JudgecanSave.JudgeNull(rawData.getClass(), rawData, haveNull);
+				if(!haveNull){
+					RiverTranData newData = new RiverTranData();
+					GraftTraData.cvtWatTraData(rawData, newData);
+					this.cvtRiverTraData(rawData, newData);
+					ds.riverTranMapper.add(newData);
+				}
+				ds.rawRiverTranMapper.add(rawData);
+			} catch (Exception e) {
+				// TODO: handle exception
+				String es = "exec data err: " +new Gson().toJson(rawData);
+				logger.error(es,e);
+			}	
 		}
 
 	}

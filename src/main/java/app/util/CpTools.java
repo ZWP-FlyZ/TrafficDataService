@@ -27,4 +27,8 @@ public class CpTools {
 	public static String getUUID(){
 		return UUID.randomUUID().toString();
 	}
+	
+	
+	
+	
 }

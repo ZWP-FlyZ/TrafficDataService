@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.gson.Gson;
+
 import app.model.CityInfoData;
 import app.model.TaxiTranData;
 import app.model.raw.TaxiTranRawData;
@@ -15,6 +20,9 @@ public class TaxiTranRunnable extends DataRunnable {
 	private DataPackage dp;
 	private DataService ds;
 	
+	
+	private final static  Logger logger = LoggerFactory.getLogger("DataRunnable");
+	
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
@@ -22,15 +30,22 @@ public class TaxiTranRunnable extends DataRunnable {
 		List<TaxiTranRawData> ttrdList = (ArrayList<TaxiTranRawData>)dp.getData();
 		boolean haveNull;
 		for(TaxiTranRawData rawData:ttrdList){
-			haveNull = false;
-			haveNull = JudgecanSave.JudgeNull(rawData.getClass(), rawData, haveNull);
-			if (!haveNull) {
-				TaxiTranData newData = new TaxiTranData();
-				GraftTraData.cvtLadTraData(rawData, newData);
-				this.cvtTaxiTranData(rawData, newData);
-				ds.taxiTranMapper.add(newData);
+			
+			try {
+				haveNull = false;
+				haveNull = JudgecanSave.JudgeNull(rawData.getClass(), rawData, haveNull);
+				if (!haveNull) {
+					TaxiTranData newData = new TaxiTranData();
+					GraftTraData.cvtLadTraData(rawData, newData);
+					this.cvtTaxiTranData(rawData, newData);
+					ds.taxiTranMapper.add(newData);
+				}
+				ds.rawTaxiTranMapper.add(rawData);
+			} catch (Exception e) {
+				// TODO: handle exception
+				String es = "exec data err: " +new Gson().toJson(rawData);
+				logger.error(es,e);
 			}
-			ds.rawTaxiTranMapper.add(rawData);
 		}
 		
 

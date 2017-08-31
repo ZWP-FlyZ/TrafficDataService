@@ -5,9 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.google.gson.Gson;
 
 import app.cacheworker.BusTranRunnable;
 import app.cacheworker.CacheWorker;
@@ -41,6 +45,7 @@ public class EncDecPcg implements InitializingBean {
 	private final static String MYBUS_SELF_NAME = "main";
 	private final static String MYBUS_TANGER_NAME = "websocket";
 	
+	private final static Logger logger = LoggerFactory.getLogger(EncDecPcg.class);
 	private Map<String,CpMutilData> taskMap = new HashMap<>();
 	
 	@Autowired
@@ -168,9 +173,10 @@ public class EncDecPcg implements InitializingBean {
 				
 			} catch (Exception e) {
 				// TODO: handle exception
-				e.printStackTrace();
 				rd.setCode(CpWords.RESP_ECODE_WAIT_REPEAT);
 				rd.setMessage(CpWords.RESP_MSG_WAIT_REPEAT);
+				String es = "exec data err: " +new Gson().toJson(message);
+				logger.error(es,e);
 			}
 			
 			di.setResult(rd);
