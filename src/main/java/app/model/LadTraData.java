@@ -1,7 +1,7 @@
 package app.model;
 
 public class LadTraData {
-	///陆上交通数据类，当前还未确 定数据字段
+
 	//protected int id;
 	protected String carId;
 	protected String inTime;

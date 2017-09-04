@@ -12,6 +12,8 @@ import app.model.raw.BusTranRawData;
 import app.model.raw.OceanGoodsRawData;
 import app.model.raw.OceanPassRawData;
 import app.model.raw.PortProRawData;
+import app.model.raw.RelTimLadTraRawData;
+import app.model.raw.RelTimWatTraRawData;
 import app.model.raw.RiverTranRawData;
 import app.model.raw.RoadGoodsRawData;
 import app.model.raw.RoadPassRawData;
@@ -55,6 +57,14 @@ public class CpInfoDeserializer implements JsonDeserializer<CpData>  {
 				di.setMutil(context.deserialize(je, CpMutilData.class));
 			
 			if((je=infoJ.get("data"))!=null){
+				
+				if(CpWords.BIZ_RT_LAND.equals(di.getBiz()))
+					di.setData(context.deserialize(je, RelTimLadTraRawData[].class));
+				if(CpWords.BIZ_RT_WATER.equals(di.getBiz()))
+					di.setData(context.deserialize(je, RelTimWatTraRawData[].class));
+				
+				
+				
 				if(CpWords.BIZ_ROAD_GOODS.equals(di.getBiz()))
 					di.setData(context.deserialize(je, RoadGoodsRawData[].class));
 				if(CpWords.BIZ_ROAD_PASS.equals(di.getBiz()))
@@ -72,6 +82,7 @@ public class CpInfoDeserializer implements JsonDeserializer<CpData>  {
 					di.setData(context.deserialize(je, OceanPassRawData[].class));
 				if(CpWords.BIZ_PORT_PRODUCE.equals(di.getBiz()))
 					di.setData(context.deserialize(je, PortProRawData[].class));
+				
 			}
 			
 			cpData.setInfo(di);

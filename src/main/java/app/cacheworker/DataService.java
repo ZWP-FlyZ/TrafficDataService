@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.mapper.BusTranMapper;
-import app.mapper.CityInfoMapper;
 import app.mapper.OceanGoodsMapper;
 import app.mapper.OceanPassMapper;
 import app.mapper.PortProMapper;
@@ -17,10 +16,15 @@ import app.mapper.RawRoadGoodsMapper;
 import app.mapper.RawRoadPassMapper;
 import app.mapper.RawShipComMapper;
 import app.mapper.RawTaxiTranMapper;
+import app.mapper.RelTimLadMapper;
+import app.mapper.RelTimWatMapper;
 import app.mapper.RiverTranMapper;
 import app.mapper.RoadGoodsMapper;
 import app.mapper.RoadPassMapper;
+import app.mapper.RowRelTimLadMapper;
+import app.mapper.RowRelTimWatMapper;
 import app.mapper.TaxiTranMapper;
+import app.util.CitiesMap;
 
 
 
@@ -31,7 +35,7 @@ public class DataService {
 	public RawRoadPassMapper rawRoadPassMapper;
 	
 	@Autowired
-	public CityInfoMapper cityInfoMapper;
+	public CitiesMap citiesMap;
 	
 	@Autowired
 	public RoadPassMapper roadPassMapper;
@@ -80,5 +84,22 @@ public class DataService {
 	
 	@Autowired
 	public PortProMapper portProMapper;
+	
+	@Autowired
+	public RowRelTimLadMapper rowRelTimLadMapper;
+	
+	@Autowired
+	public RowRelTimWatMapper rowRelTimWatMapper;
+	
+	@Autowired
+	public RelTimLadMapper relTimLadMapper;
+	
+	@Autowired
+	public RelTimWatMapper relTimWatMapper;
+	
+	
+	
+	
+	
 	
 }

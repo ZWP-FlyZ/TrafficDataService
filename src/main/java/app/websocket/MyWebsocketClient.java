@@ -23,8 +23,10 @@ import app.util.FileStorageUtil;
 import app.websocket.yuntu.model.Certificate;
 import app.websocket.yuntu.model.CpClient;
 import app.websocket.yuntu.model.CpData;
+import app.websocket.yuntu.model.CpDataInfo;
 import app.websocket.yuntu.model.CpInfoDeserializer;
 import app.websocket.yuntu.model.CpProtocalInfo;
+import app.websocket.yuntu.model.CpResultData;
 import app.websocket.yuntu.model.CpWords;
 
 
@@ -82,9 +84,32 @@ public class MyWebsocketClient extends WebSocketClient implements InitializingBe
 	@Override
 	public void onMessage(String message) {
 		// TODO Auto-generated method stub
-		CpData c = gson.fromJson(message, CpData.class);
+		CpData c =null;
 		if(!message.contains(CpWords.TYPE_HEART_BEAT_REQ))
 			logger.info("get json = "+message);
+		try {
+			 c = gson.fromJson(message, CpData.class);
+		} catch (Exception e) {
+			// TODO: handle exception
+			logger.error("json decode ERR! jsonS = "+ message ,e);
+			c = new Gson().fromJson(message, CpData.class);
+			String tmp = c.getFrom();
+			c.setFrom(c.getTo());
+			c.setTo(tmp);
+			c.setType(CpWords.TYPE_DATA_RESP);
+			CpDataInfo di = new CpDataInfo() ;
+			CpResultData rd = new CpResultData();
+			rd.setCode(CpWords.RESP_ECODE_WRONG_FORMAL);
+			rd.setMessage(CpWords.RESP_MSG_WRONG_FORMAL);
+			di.setResult(rd);
+			di.setData(null);
+			c.setInfo(di);
+			send(c);
+			return ;
+		}
+		
+		
+		
 		if(CpWords.TYPE_DATA_REQ.equals(c.getType()))
 			MyBus.getMainBus().sendMessage(MYBUS_TANGER_NAME, c);
 		

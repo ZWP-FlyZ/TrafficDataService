@@ -53,7 +53,7 @@ public class OceanPassRunnable extends DataRunnable {
 		newData.setSitCot(rawData.getCountPsger());
 		newData.setShipType("-");
 		
-		CityInfoData cityInfoData = ds.cityInfoMapper.getByCityId(rawData.getAreaId());
+		CityInfoData cityInfoData = ds.citiesMap.getCityInfo(rawData.getAreaId());
 		newData.setPlace1(cityInfoData.getCity());
 		newData.setPlace2(cityInfoData.getCounty());
 	}

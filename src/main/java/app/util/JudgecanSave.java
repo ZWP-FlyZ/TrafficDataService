@@ -18,6 +18,7 @@ public class JudgecanSave {
 				//logger.debug(field.getName()+": "+field.get(obj));
 				if (field.get(obj)==null) {
 					haveNull = true;
+					return true;
 				}
 			}
 			if (cur_class.getSuperclass() != null) {
@@ -25,7 +26,8 @@ public class JudgecanSave {
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			e.printStackTrace();
+			
+			logger.error("JudgeNull Err" ,e);
 		}
 		
 		return haveNull;

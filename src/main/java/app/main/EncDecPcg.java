@@ -20,6 +20,9 @@ import app.cacheworker.DataRunnable;
 import app.cacheworker.OceanGoodsRunnable;
 import app.cacheworker.OceanPassRunnable;
 import app.cacheworker.PortProRunnable;
+import app.cacheworker.RelTimLadRunnable;
+import app.cacheworker.RelTimWatRunnable;
+import app.cacheworker.RiverTranRunnable;
 import app.cacheworker.RoadGoodsRunnable;
 import app.cacheworker.RoadPassRunnable;
 import app.cacheworker.TaxiTranRunnable;
@@ -27,6 +30,8 @@ import app.model.raw.BusTranRawData;
 import app.model.raw.OceanGoodsRawData;
 import app.model.raw.OceanPassRawData;
 import app.model.raw.PortProRawData;
+import app.model.raw.RelTimLadTraRawData;
+import app.model.raw.RelTimWatTraRawData;
 import app.model.raw.RiverTranRawData;
 import app.model.raw.RoadGoodsRawData;
 import app.model.raw.RoadPassRawData;
@@ -106,6 +111,22 @@ public class EncDecPcg implements InitializingBean {
 				}else{
 					DataPackage dp = new DataPackage();
 					int flag = 0;
+					
+					if(CpWords.BIZ_RT_LAND.equals(di.getBiz())){
+						dp.setDataType(CpWords.BIZ_RT_LAND);
+						dp.setData(arr2list((RelTimLadTraRawData[]) data));
+						flag = 3;
+					}
+
+					if(CpWords.BIZ_RT_WATER.equals(di.getBiz())){
+						dp.setDataType(CpWords.BIZ_RT_WATER);
+						dp.setData(arr2list((RelTimWatTraRawData[])data));
+						flag = 4;
+					}
+					
+					
+					
+					
 					if(CpWords.BIZ_ROAD_GOODS.equals(di.getBiz())){
 						dp.setDataType(CpWords.BIZ_ROAD_GOODS);
 						dp.setData(arr2list((RoadGoodsRawData[]) data));
@@ -151,12 +172,17 @@ public class EncDecPcg implements InitializingBean {
 						taskMap.put(mutil.getTaskId(), mutil);
 					} 
 					
-					if(flag == 0){
+					
+					if(flag == 3){
+						flag = lanDataWorkerRel.putData(dp);
+					}else if(flag == 4){
+						flag = watDataWorkerRel.putData(dp);
+					}else if(flag == 0){
 						flag = lanDataWorker.putData(dp);
 					}else if(flag ==1){
 						flag = watDataWorker.putData(dp);
 					}
-						
+					
 					if(flag==0){
 						rd.setCode(CpWords.RESP_ECODE_OK);
 						rd.setMessage(CpWords.RESP_MSG_OK);
@@ -173,8 +199,9 @@ public class EncDecPcg implements InitializingBean {
 				
 			} catch (Exception e) {
 				// TODO: handle exception
-				rd.setCode(CpWords.RESP_ECODE_WAIT_REPEAT);
-				rd.setMessage(CpWords.RESP_MSG_WAIT_REPEAT);
+				di = new CpDataInfo();
+				rd.setCode(CpWords.RESP_ECODE_WRONG_FORMAL);
+				rd.setMessage(CpWords.RESP_MSG_WRONG_FORMAL);
 				String es = "exec data err: " +new Gson().toJson(message);
 				logger.error(es,e);
 			}
@@ -206,21 +233,33 @@ public class EncDecPcg implements InitializingBean {
 		Map<String, Class<? extends DataRunnable>> landMap = new HashMap<>();
 		Map<String, Class<? extends DataRunnable>> watMap = new HashMap<>();
 		
+		Map<String, Class<? extends DataRunnable>> ladRelMap = new HashMap<>();
+		Map<String, Class<? extends DataRunnable>> watRelMap = new HashMap<>();
+		
+		
+		
 		landMap.put(CpWords.BIZ_ROAD_GOODS, RoadGoodsRunnable.class);
 		landMap.put(CpWords.BIZ_ROAD_PASS, RoadPassRunnable.class);
 		landMap.put(CpWords.BIZ_BUS, BusTranRunnable.class);
 		landMap.put(CpWords.BIZ_TAXI, TaxiTranRunnable.class);
 		
-		watMap.put(CpWords.BIZ_RIVER, TaxiTranRunnable.class);
+		watMap.put(CpWords.BIZ_RIVER, RiverTranRunnable.class);
 		watMap.put(CpWords.BIZ_OCEAN_GOODS, OceanGoodsRunnable.class);
 		watMap.put(CpWords.BIZ_OCEAN_PASS, OceanPassRunnable.class);
 		watMap.put(CpWords.BIZ_PORT_PRODUCE, PortProRunnable.class);
+		
+		ladRelMap.put(CpWords.BIZ_RT_LAND, RelTimLadRunnable.class);
+		
+		watRelMap.put(CpWords.BIZ_RT_WATER, RelTimWatRunnable.class);
+		
 
 		lanDataWorker.setTypeMap(landMap);
 		watDataWorker.setTypeMap(watMap);
 		
-		lanDataWorkerRel.setTypeMap(null);
-		watDataWorkerRel.setTypeMap(null);
+		lanDataWorkerRel.setTypeMap(ladRelMap);
+		watDataWorkerRel.setTypeMap(watRelMap);
+		
+		
 	}
 	
 	

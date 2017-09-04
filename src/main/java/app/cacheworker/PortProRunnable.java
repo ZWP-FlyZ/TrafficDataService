@@ -68,7 +68,7 @@ public class PortProRunnable extends DataRunnable {
 		String traType = ConvertTool.decodeTraType(rawData.getTransType());
 		newData.setTraType(traType);
 		
-		CityInfoData cityInfoData = ds.cityInfoMapper.getByCityId(rawData.getAreaId());
+		CityInfoData cityInfoData = ds.citiesMap.getCityInfo(rawData.getAreaId());
 		newData.setPlace1(cityInfoData.getCity());
 		newData.setPlace2(cityInfoData.getCounty());
 		

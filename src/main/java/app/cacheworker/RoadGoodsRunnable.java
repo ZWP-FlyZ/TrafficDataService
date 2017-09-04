@@ -54,7 +54,7 @@ public class RoadGoodsRunnable extends DataRunnable {
 		newData.setCarType(rawData.getCAR_TYPE());
 		newData.setTonnage(rawData.getAPPROVED_CARGO());
 		
-		CityInfoData cityInfoData = ds.cityInfoMapper.getByCityId(rawData.getAREA_NAME());
+		CityInfoData cityInfoData = ds.citiesMap.getCityInfo(rawData.getAREA_NAME());
 		newData.setPlace1(cityInfoData.getCity());
 		newData.setPlace2(cityInfoData.getCounty());
 	}

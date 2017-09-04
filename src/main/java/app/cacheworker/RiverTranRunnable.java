@@ -53,7 +53,7 @@ public class RiverTranRunnable extends DataRunnable {
 		newData.setTonnage(rawData.getTonnage());
 		newData.setShipType(rawData.getShipType());
 		
-		CityInfoData cityInfoData = ds.cityInfoMapper.getByCityId(rawData.getAreaId());
+		CityInfoData cityInfoData = ds.citiesMap.getCityInfo(rawData.getAreaId());
 		newData.setPlace1(cityInfoData.getCity());
 		newData.setPlace2(cityInfoData.getCounty());
 	}

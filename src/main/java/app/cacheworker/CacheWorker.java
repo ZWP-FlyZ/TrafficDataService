@@ -74,13 +74,9 @@ public class CacheWorker implements InitializingBean{
 					dr.setDataService(dataService);
 					dr.setDataPackage(dp);
 					threadPool.execute(dr);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				} catch (InstantiationException e) {
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
-				}
+				} catch (Exception e) {
+					logger.error("循环添加任务出错",e);
+				} 
 			}// while = true endless loop
 		}
 		

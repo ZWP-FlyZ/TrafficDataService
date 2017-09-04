@@ -53,7 +53,7 @@ public class BusTranRunnable extends DataRunnable {
 		newData.setGoTurn(rawData.getPASSENGER_TURNOVER());
 		newData.setCarLength(rawData.getBUS_LENGTH());
 		
-		CityInfoData cityInfoData = ds.cityInfoMapper.getByCityId(rawData.getAREA_NAME());
+		CityInfoData cityInfoData = ds.citiesMap.getCityInfo(rawData.getAREA_NAME());
 		newData.setPlace1(cityInfoData.getCity());
 		newData.setPlace2(cityInfoData.getCounty());
 		
