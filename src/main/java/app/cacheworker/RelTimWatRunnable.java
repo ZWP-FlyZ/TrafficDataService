@@ -9,9 +9,7 @@ import org.slf4j.LoggerFactory;
 import com.google.gson.Gson;
 
 import app.model.CityInfoData;
-import app.model.RelTimLadTraData;
 import app.model.RelTimWatTraData;
-import app.model.raw.RelTimLadTraRawData;
 import app.model.raw.RelTimWatTraRawData;
 import app.util.GraftTraData;
 import app.util.JudgecanSave;

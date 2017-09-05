@@ -10,9 +10,7 @@ import com.google.gson.Gson;
 
 import app.model.CityInfoData;
 import app.model.RelTimLadTraData;
-import app.model.RoadGoodsData;
 import app.model.raw.RelTimLadTraRawData;
-import app.model.raw.RoadGoodsRawData;
 import app.util.GraftTraData;
 import app.util.JudgecanSave;
 
