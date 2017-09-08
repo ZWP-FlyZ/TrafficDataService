@@ -65,7 +65,9 @@
 		<dependency>
     <groupId>mysql</groupId>
     <artifactId>mysql-connector-java</artifactId>
-    </dependency>
+    <version>6.0.6</version><!--$NO-MVN-MAN-VER$-->
+</dependency>
+
 
 
 		<dependency>
