@@ -69,6 +69,7 @@ public class PortProRunnable extends DataRunnable {
 		newData.setTraType(traType);
 		
 		CityInfoData cityInfoData = ds.citiesMap.getCityInfo(rawData.getAreaId());
+		if(cityInfoData==null) throw new NullPointerException("cityInfoData==null");
 		newData.setPlace1(cityInfoData.getCity());
 		newData.setPlace2(cityInfoData.getCounty());
 		
