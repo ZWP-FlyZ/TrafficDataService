@@ -13,6 +13,7 @@ import app.model.RelTimLadTraData;
 import app.model.raw.RelTimLadTraRawData;
 import app.util.GraftTraData;
 import app.util.JudgecanSave;
+import app.util.MyException;
 
 public class RelTimLadRunnable extends DataRunnable {
 
@@ -98,7 +99,7 @@ public class RelTimLadRunnable extends DataRunnable {
 					tmp[0] = TN_RT_TAXI_RAW;
 					tmp[1] = TN_RT_TAXI;
 					break;
-		default:break;
+		default:throw new MyException("未知运输类型");
 		}
 		return tmp;
 	}

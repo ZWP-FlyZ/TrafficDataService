@@ -13,6 +13,7 @@ import app.model.RelTimWatTraData;
 import app.model.raw.RelTimWatTraRawData;
 import app.util.GraftTraData;
 import app.util.JudgecanSave;
+import app.util.MyException;
 
 public class RelTimWatRunnable extends DataRunnable {
 
@@ -77,7 +78,7 @@ public class RelTimWatRunnable extends DataRunnable {
 					tmp[0] = TN_RT_RIVER_RAW;
 					tmp[1] = TN_RT_RIVER;
 					break;
-		default:break;
+		default:throw new MyException("未知运输类型");
 		}
 		return tmp;
 	}
