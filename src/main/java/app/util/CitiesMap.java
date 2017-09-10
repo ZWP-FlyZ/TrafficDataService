@@ -22,13 +22,14 @@ public class CitiesMap {
 	private final  Map<String,CityInfoData> mMap = new HashMap<>();
 	
 	public CityInfoData getCityInfo(String city){
-		if(city==null) return null;
+		if(city==null)  throw new MyException("解析地区码为空！");
 		lock.readLock().lock();
 		CityInfoData t = mMap.get(city);
 		lock.readLock().unlock();
 		if(t!=null) return t;
 		else
 			t = getCityInfoFromDB(city);
+		if(t==null) throw new MyException("未获取地区码["+city+"]信息！");
 		return t;
 	}
 	

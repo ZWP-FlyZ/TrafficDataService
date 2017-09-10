@@ -12,7 +12,6 @@ import app.model.CityInfoData;
 import app.model.RelTimWatTraData;
 import app.model.raw.RelTimWatTraRawData;
 import app.util.GraftTraData;
-import app.util.JudgecanSave;
 import app.util.MyException;
 
 public class RelTimWatRunnable extends DataRunnable {
@@ -38,7 +37,7 @@ public class RelTimWatRunnable extends DataRunnable {
 		for(RelTimWatTraRawData rawData:dls){
 			try {
 				haveNull = false;
-				haveNull = JudgecanSave.JudgeNull(rawData.getClass(), rawData, haveNull);
+				//haveNull = JudgecanSave.JudgeNull(rawData.getClass(), rawData, haveNull);
 				String[] tns = getTName(rawData.getTransType());
 				if (!haveNull) {
 					RelTimWatTraData newData = new RelTimWatTraData();
@@ -70,7 +69,7 @@ public class RelTimWatRunnable extends DataRunnable {
 	
 	
 	private String[] getTName(String tranType){
-		if(tranType==null) return null;
+		if(tranType==null) throw new MyException("未知运输类型");
 		String[] tmp = new String[2];
 		
 		switch (tranType) {

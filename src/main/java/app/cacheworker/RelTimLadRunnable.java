@@ -12,7 +12,6 @@ import app.model.CityInfoData;
 import app.model.RelTimLadTraData;
 import app.model.raw.RelTimLadTraRawData;
 import app.util.GraftTraData;
-import app.util.JudgecanSave;
 import app.util.MyException;
 
 public class RelTimLadRunnable extends DataRunnable {
@@ -46,14 +45,15 @@ public class RelTimLadRunnable extends DataRunnable {
 		for(RelTimLadTraRawData rawData:dls){
 			try {
 				haveNull = false;
-				haveNull = JudgecanSave.JudgeNull(rawData.getClass(), rawData, haveNull);
+				//haveNull = JudgecanSave.JudgeNull(rawData.getClass(), rawData, false);
 				String[] tns = getTName(rawData.getINDUSTRY());
 				if (!haveNull) {
 					RelTimLadTraData newData = new RelTimLadTraData();
 					GraftTraData.cvtRelTimLadTraData(rawData, newData);
 					this.cvtRelTimLadTraData(rawData, newData);
-					ds.relTimLadMapper.add(tns[1],newData);	
+					ds.relTimLadMapper.add(tns[1],newData);
 				}
+
 				ds.rowRelTimLadMapper.add(tns[0],rawData);
 			} catch (Exception e) {
 				// TODO: handle exception
@@ -79,7 +79,7 @@ public class RelTimLadRunnable extends DataRunnable {
 	
 	
 	private String[] getTName(String tranType){
-		if(tranType==null) return null;
+		if(tranType==null) throw new MyException("未知运输类型");
 		String[] tmp = new String[2];
 		
 		switch (tranType) {
