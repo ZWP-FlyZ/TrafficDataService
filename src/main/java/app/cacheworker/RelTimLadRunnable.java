@@ -83,11 +83,11 @@ public class RelTimLadRunnable extends DataRunnable {
 		String[] tmp = new String[2];
 		
 		switch (tranType) {
-		case "t1":  
+		case "t2":  
 					tmp[0] = TN_RT_ROADGOODS_RAW;
 					tmp[1] = TN_RT_ROADGOODS;
 					break;
-		case "t2": 					
+		case "t1": 					
 					tmp[0] = TN_RT_ROADPASS_RAW;
 					tmp[1] = TN_RT_ROADPASS;
 					break;
