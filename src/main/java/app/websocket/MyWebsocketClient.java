@@ -86,7 +86,12 @@ public class MyWebsocketClient extends WebSocketClient implements InitializingBe
 		// TODO Auto-generated method stub
 		CpData c =null;
 		if(!message.contains(CpWords.TYPE_HEART_BEAT_REQ))
-			logger.info("get json = "+message);
+			if(message.contains("\"data\""))
+				logger.info("get json = "+message.substring(0, message.indexOf("\"data\""))+" [-------] "+ 
+										message.substring(message.indexOf("\"doc\"")));
+			else if(!message.contains("\"INFO_ACK\"")){
+				logger.info("get json = "+message);
+			}
 		try {
 			 c = gson.fromJson(message, CpData.class);
 		} catch (Exception e) {
