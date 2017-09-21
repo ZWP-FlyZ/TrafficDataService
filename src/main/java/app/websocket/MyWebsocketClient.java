@@ -231,7 +231,7 @@ public class MyWebsocketClient extends WebSocketClient implements InitializingBe
 		gson = gsonBuilder.create();
 		
 		String cerJson = 
-				CpTools.readJsonFile("/app/websocket/yuntu/model/certificate.json");
+				CpTools.readJsonFile("/certificate.json");
 		
 		client.setCertificate(gson.fromJson(cerJson, Certificate.class));
 		client.setStatus(CpClient.CLIENT_STATUS_CLOSED);
