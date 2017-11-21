@@ -1,6 +1,6 @@
 package app.model.raw;
 
-public class LadTraRawData {
+public class LadTraRawData implements RawData {
 
 	protected String PLATE_NUMBER;
 	protected String REPORT_TIME;

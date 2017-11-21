@@ -14,6 +14,7 @@ import app.model.TaxiTranData;
 import app.model.raw.TaxiTranRawData;
 import app.util.GraftTraData;
 import app.util.JudgecanSave;
+import app.util.RangeChecker;
 
 public class TaxiTranRunnable extends DataRunnable {
 
@@ -34,7 +35,7 @@ public class TaxiTranRunnable extends DataRunnable {
 			try {
 				haveNull = false;
 				haveNull = JudgecanSave.JudgeNull(rawData.getClass(), rawData, haveNull);
-				if (!haveNull) {
+				if (!haveNull&&RangeChecker.checkTaxiTran(rawData)) {
 					TaxiTranData newData = new TaxiTranData();
 					GraftTraData.cvtLadTraData(rawData, newData);
 					this.cvtTaxiTranData(rawData, newData);

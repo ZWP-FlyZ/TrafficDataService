@@ -1,6 +1,6 @@
 package app.model.raw;
 
-public class WatTraRawData {
+public class WatTraRawData implements RawData{
 	protected String shipId;
 	protected String countDate;
 	protected String areaId;

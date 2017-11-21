@@ -13,6 +13,7 @@ import app.model.RiverTranData;
 import app.model.raw.RiverTranRawData;
 import app.util.GraftTraData;
 import app.util.JudgecanSave;
+import app.util.RangeChecker;
 
 public class RiverTranRunnable extends DataRunnable {
 
@@ -32,7 +33,7 @@ public class RiverTranRunnable extends DataRunnable {
 			try {
 				haveNull = false;
 				haveNull = JudgecanSave.JudgeNull(rawData.getClass(), rawData, haveNull);
-				if(!haveNull){
+				if(!haveNull&&RangeChecker.checkRiverTran(rawData)){
 					RiverTranData newData = new RiverTranData();
 					GraftTraData.cvtWatTraData(rawData, newData);
 					this.cvtRiverTraData(rawData, newData);

@@ -13,6 +13,7 @@ import app.model.OceanGoodsData;
 import app.model.raw.OceanGoodsRawData;
 import app.util.GraftTraData;
 import app.util.JudgecanSave;
+import app.util.RangeChecker;
 
 public class OceanGoodsRunnable extends DataRunnable{
 
@@ -31,7 +32,7 @@ public class OceanGoodsRunnable extends DataRunnable{
 			try {
 				haveNull = false;
 				haveNull = JudgecanSave.JudgeNull(rawData.getClass(), rawData, haveNull);
-				if(!haveNull){
+				if(!haveNull&&RangeChecker.checkOceanGoods(rawData)){
 					OceanGoodsData newData = new OceanGoodsData();
 					GraftTraData.cvtWatTraData(rawData, newData);
 					this.cvtOceanGoodsData(rawData, newData);

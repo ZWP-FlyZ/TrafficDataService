@@ -13,6 +13,7 @@ import app.model.RoadGoodsData;
 import app.model.raw.RoadGoodsRawData;
 import app.util.GraftTraData;
 import app.util.JudgecanSave;
+import app.util.RangeChecker;
 
 public class RoadGoodsRunnable extends DataRunnable {
 
@@ -32,7 +33,7 @@ public class RoadGoodsRunnable extends DataRunnable {
 			try {
 				haveNull = false;
 				haveNull = JudgecanSave.JudgeNull(rawData.getClass(), rawData, haveNull);
-				if (!haveNull) {
+				if (!haveNull&&RangeChecker.checkRoadGoods(rawData)) {
 					RoadGoodsData newData = new RoadGoodsData();
 					GraftTraData.cvtLadTraData(rawData, newData);
 					this.cvtRoadGoodsData(rawData, newData);
