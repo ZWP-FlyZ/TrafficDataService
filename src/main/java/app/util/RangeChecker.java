@@ -2,7 +2,6 @@ package app.util;
 
 import app.model.raw.BusTranRawData;
 import app.model.raw.OceanGoodsRawData;
-import app.model.raw.RawData;
 import app.model.raw.RiverTranRawData;
 import app.model.raw.RoadGoodsRawData;
 import app.model.raw.RoadPassRawData;
@@ -30,6 +29,7 @@ public class RangeChecker {
 												  {0.0913,0.2079},//11-14
 												  {0.0913,0.2079}};	//14>
 	
+	@SuppressWarnings("unused")
 	private final static double[] x_taxitran = 	{};//
 	private final static double[][] y_taxitran = {{0.0367,0.1469}};
 	

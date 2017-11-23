@@ -34,7 +34,7 @@ public class ConvertTool {
 		case "t5": traType="内河运输";break;
 		case "t6": traType="海洋货运";break;
 		case "t7": traType="海洋客运";break;
-		case "t8": traType="港口企业";break;
+		case "t8": traType="港口生产";break;
 		case "t9": traType="航运企业";break;
 		default:throw new MyException("错误的运输类型");
 		}
