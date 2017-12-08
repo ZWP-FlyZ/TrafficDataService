@@ -30,6 +30,20 @@ public class RangeCheckerTest {
 		
 	}
 	
+	private final int getIndexByFu(String ful){
+		switch(ful){
+			case "f1":
+			case "f2":
+			case "f3":
+			case "f4":return 2;
+			case "f6":return 4;
+			case "f8":
+			case "f9":return 3;
+			default:return 5;
+		}
+	}
+	
+	
 	@Test
 	public void test() {
 		
@@ -41,6 +55,19 @@ public class RangeCheckerTest {
 		System.err.println(RangeChecker.checkTaxiTran(rd3));
 		
 		System.err.println(tg);
+		
+		
+		System.err.println(getIndexByFu("f3"));
+		System.err.println(getIndexByFu("f4"));
+		System.err.println(getIndexByFu("f6"));
+		System.err.println(getIndexByFu("f11"));
+		System.err.println(getIndexByFu("f9"));
+		
+		
+		
+		
+		
+		
 	}
 
 }
