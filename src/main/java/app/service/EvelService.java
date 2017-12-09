@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import app.mapper.EvelMapper;
 import app.model.EvelData;
@@ -17,7 +16,7 @@ public class EvelService {
 	@Autowired
 	EvelMapper em;
 		
-	@Transactional
+
 	public List<List<EvelData>> getEvelDataPar(RequestData data){
 		List<List<EvelData>> ds = new ArrayList<List<EvelData>>();
 		List<String> times = getTimes(data.getTimeRange());
@@ -37,7 +36,9 @@ public class EvelService {
 	private  final static List<String> getTimes(String timeRange){
 		if(timeRange==null) throw new NullPointerException("timeRange is null");
 		List<String> ls = new ArrayList<String>();
-		String[] ts = timeRange.split(":"); 
+		String[] ts = timeRange.split(":");
+//		ts[0] = ts[0].substring(0, 7);
+//		ts[1] = ts[1].substring(0, 7);
 		ls.add(ts[0].replace("-", ""));
 		ls.add(ts[1].replace("-", ""));
 		ls.add(ts[0]);
@@ -112,7 +113,7 @@ public class EvelService {
 		for(EvelData d:ori){
 			tmp = d.getYm();
 			tmp = tmp.substring(0, 7);
-			d.setYm(tmp.replace("_", ""));				
+			d.setYm(tmp.replace("-", ""));
 		}
 		
 		return ori;

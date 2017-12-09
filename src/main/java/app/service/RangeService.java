@@ -346,16 +346,21 @@ public class RangeService implements InitializingBean{
 				else
 				{
 					t = ranges.get(i).split("_");
-					data.ranges[i][index][0] = Double.parseDouble(t[1]);
-					data.ranges[i][index][1] = Double.parseDouble(t[2]);
+					
+					data.ranges[i][index][0] = 
+							t[1].equals(NAN)?Double.NEGATIVE_INFINITY:Double.parseDouble(t[1]);
+					data.ranges[i][index][1] = 
+							t[2].equals(NAN)?Double.POSITIVE_INFINITY:Double.parseDouble(t[2]);
 					data.flags[i][index] = true;
 				}
-			rm.insertRangeByType(tranType, new Gson().toJson(ranges));
 			rwl.writeLock().unlock();
+			rm.insertRangeByType(tranType, new Gson().toJson(ranges));
+			
 		} catch (Exception e) {			
 			rwl.writeLock().unlock();
 			throw e;
 		}
+		logger.debug(data2String());
 	}
 	
 	
@@ -372,8 +377,10 @@ public class RangeService implements InitializingBean{
 				else
 				{
 					t = ranges.get(i).split("_");
-					data.ranges[i][index][0] = Double.parseDouble(t[1]);
-					data.ranges[i][index][1] = Double.parseDouble(t[2]);
+					data.ranges[i][index][0] = 
+							t[1].equals(NAN)?Double.NEGATIVE_INFINITY:Double.parseDouble(t[1]);
+					data.ranges[i][index][1] = 
+							t[2].equals(NAN)?Double.POSITIVE_INFINITY:Double.parseDouble(t[2]);
 					data.flags[i][index] = true;
 				}
 			rwl.writeLock().unlock();

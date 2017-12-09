@@ -1,5 +1,7 @@
 package service.app;
 
+import java.util.Arrays;
+
 import org.junit.Test;
 
 import com.google.gson.Gson;
@@ -21,6 +23,13 @@ public class DecodeTest {
 		
 		System.err.println(Double.parseDouble(".4"));
 		System.err.println(Double.parseDouble("4."));
+		
+		System.err.println(Arrays.toString("N_N_N".split("_")));
+		
+		
+		System.err.println(Double.NEGATIVE_INFINITY>0.01);
+		System.err.println(Double.POSITIVE_INFINITY>1000000000000.0);
+		
 	}
 
 }

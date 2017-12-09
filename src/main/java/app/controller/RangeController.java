@@ -7,9 +7,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -23,7 +23,7 @@ import app.service.RangeService;
 
 
 
-@RestController
+@Controller
 public class RangeController {
 
 	@Autowired
@@ -37,6 +37,7 @@ public class RangeController {
 	private final static Logger logger = LoggerFactory.getLogger(RangeController.class);
 	
 	@RequestMapping("/getrangeO.json")
+	@ResponseBody
 	public RangeResponse getRanges(HttpServletResponse response,RequestData data){
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		RangeResponse rr = new RangeResponse();
@@ -52,6 +53,7 @@ public class RangeController {
 	}
 	
 	@RequestMapping("/setrangeO.json")
+	@ResponseBody
 	public RangeResponse setRanges(HttpServletResponse response,RequestData data){
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		RangeResponse rr = new RangeResponse();
@@ -69,6 +71,7 @@ public class RangeController {
 	}
 	
 	@RequestMapping("/getevelO.json")
+	@ResponseBody
 	public EvelResponse getEvel(HttpServletResponse response,RequestData data){
 		response.setHeader("Access-Control-Allow-Origin", "*");
 //		data.setCompanyId("");
@@ -90,6 +93,7 @@ public class RangeController {
 			logger.error("设置范围数据错误",e);
 			er.setErrCode(31);
 		}
+
 		
 		return er;
 	}

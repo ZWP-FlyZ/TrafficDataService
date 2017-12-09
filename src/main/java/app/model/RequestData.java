@@ -1,7 +1,5 @@
 package app.model;
 
-import java.util.List;
-
 public class RequestData {
 	private String tranType;
 	private String ranges;

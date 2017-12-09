@@ -251,7 +251,7 @@ public class MyWebsocketClient extends WebSocketClient implements InitializingBe
 		heartBeat.setMethod(CpWords.METHOD_INFO);
 		heartBeat.setType(CpWords.TYPE_HEART_BEAT_REQ);
 		
-		//this.connect();
+		this.connect();
 		
 	}
 
