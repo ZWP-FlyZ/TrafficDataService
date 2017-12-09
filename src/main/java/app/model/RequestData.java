@@ -4,7 +4,7 @@ import java.util.List;
 
 public class RequestData {
 	private String tranType;
-	private List<String> ranges;
+	private String ranges;
 
 		
 	private String timeRange;
@@ -17,11 +17,13 @@ public class RequestData {
 		this.tranType = tranType;
 	}
 
-	public List<String> getRanges() {
+
+
+	public String getRanges() {
 		return ranges;
 	}
 
-	public void setRanges(List<String> ranges) {
+	public void setRanges(String ranges) {
 		this.ranges = ranges;
 	}
 

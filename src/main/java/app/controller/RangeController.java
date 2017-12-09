@@ -8,7 +8,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import app.model.EvelData;
 import app.model.EvelResponse;
@@ -27,6 +31,8 @@ public class RangeController {
 	
 	@Autowired
 	EvelService es;
+	
+	private Gson gson = new Gson();
 	
 	private final static Logger logger = LoggerFactory.getLogger(RangeController.class);
 	
@@ -49,10 +55,12 @@ public class RangeController {
 	public RangeResponse setRanges(HttpServletResponse response,RequestData data){
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		RangeResponse rr = new RangeResponse();
+		List<String> tmp;
 		rr.setErrCode(30);
 		rr.setTranType(data.getTranType());
 		try {
-			rs.setRange(data.getTranType(),data.getRanges());
+			tmp = gson.fromJson(data.getRanges(), new TypeToken<List<String>>(){}.getType());
+			rs.setRange(data.getTranType(),tmp);
 		} catch (Exception e) {
 			logger.error("设置范围数据错误",e);
 			rr.setErrCode(31);

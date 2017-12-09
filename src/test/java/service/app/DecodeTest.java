@@ -19,6 +19,8 @@ public class DecodeTest {
 		
 		//System.err.println(EvelService.getTimes("2017-01:2017-12"));
 		
+		System.err.println(Double.parseDouble(".4"));
+		System.err.println(Double.parseDouble("4."));
 	}
 
 }

@@ -352,11 +352,10 @@ public class RangeService implements InitializingBean{
 				}
 			rm.insertRangeByType(tranType, new Gson().toJson(ranges));
 			rwl.writeLock().unlock();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception e) {			
 			rwl.writeLock().unlock();
+			throw e;
 		}
-		
 	}
 	
 	
@@ -379,8 +378,8 @@ public class RangeService implements InitializingBean{
 				}
 			rwl.writeLock().unlock();
 		} catch (Exception e) {
-			e.printStackTrace();
 			rwl.writeLock().unlock();
+			throw e;
 		}
 		
 	}
