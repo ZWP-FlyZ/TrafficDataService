@@ -15,7 +15,6 @@ import app.model.RoadPassData;
 import app.model.raw.RoadPassRawData;
 import app.util.GraftTraData;
 import app.util.JudgecanSave;
-import app.util.RangeChecker;
 
 
 public class RoadPassRunnable extends DataRunnable {
@@ -38,7 +37,7 @@ public class RoadPassRunnable extends DataRunnable {
 				haveNull = false;
 				haveNull = JudgecanSave.JudgeNull(rawData.getClass(), rawData, haveNull);
 				
-				if (!haveNull&&RangeChecker.checkRoadPass(rawData)) {
+				if (!haveNull&&ds.rangeService.checkRoadPass(rawData)) {
 					RoadPassData newData = new RoadPassData();
 					GraftTraData.cvtLadTraData(rawData, newData);
 					this.cvtRoadPassData(rawData, newData);

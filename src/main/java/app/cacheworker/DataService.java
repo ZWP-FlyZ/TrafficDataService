@@ -24,6 +24,7 @@ import app.mapper.RoadPassMapper;
 import app.mapper.RowRelTimLadMapper;
 import app.mapper.RowRelTimWatMapper;
 import app.mapper.TaxiTranMapper;
+import app.service.RangeService;
 import app.util.CitiesMap;
 
 
@@ -97,7 +98,8 @@ public class DataService {
 	@Autowired
 	public RelTimWatMapper relTimWatMapper;
 	
-	
+	@Autowired
+	public RangeService rangeService;
 	
 	
 	

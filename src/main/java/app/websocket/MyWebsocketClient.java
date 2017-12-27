@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
@@ -41,6 +42,10 @@ public class MyWebsocketClient extends WebSocketClient implements InitializingBe
 	
 	private final static String MYBUS_SELF_NAME = "websocket";
 	private final static String MYBUS_TANGER_NAME = "main";
+	
+	@Value("${yuntu.switch}")
+	private Boolean yuntuSwitch;
+	
 	
 	@Autowired
 	FileStorageUtil fs;
@@ -251,7 +256,8 @@ public class MyWebsocketClient extends WebSocketClient implements InitializingBe
 		heartBeat.setMethod(CpWords.METHOD_INFO);
 		heartBeat.setType(CpWords.TYPE_HEART_BEAT_REQ);
 		
-		//this.connect();
+		if(yuntuSwitch!=null&&yuntuSwitch)
+			this.connect();
 		
 	}
 

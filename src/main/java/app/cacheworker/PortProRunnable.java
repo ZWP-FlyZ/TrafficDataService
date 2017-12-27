@@ -33,7 +33,7 @@ public class PortProRunnable extends DataRunnable {
 				String compType = rawData.getTransType();
 				if (compType.equals("t8")) {
 					haveNull = JudgecanSave.JudgePortProNull(rawData.getClass(), rawData, haveNull);
-					if (!haveNull) {
+					if (!haveNull&&ds.rangeService.checkPortProduct(rawData)) {
 						PortProData newData = new PortProData();
 						this.cvtPortProData(rawData, newData);
 						ds.portProMapper.add(newData);

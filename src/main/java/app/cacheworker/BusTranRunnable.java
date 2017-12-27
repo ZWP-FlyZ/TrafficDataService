@@ -13,7 +13,6 @@ import app.model.CityInfoData;
 import app.model.raw.BusTranRawData;
 import app.util.GraftTraData;
 import app.util.JudgecanSave;
-import app.util.RangeChecker;
 
 public class BusTranRunnable extends DataRunnable {
 
@@ -33,7 +32,7 @@ public class BusTranRunnable extends DataRunnable {
 			try {
 				haveNull = false;
 				haveNull = JudgecanSave.JudgeNull(rawData.getClass(), rawData, haveNull);
-				if (!haveNull&&RangeChecker.checkBusTran(rawData)) {
+				if (!haveNull&&ds.rangeService.checkBusTran(rawData)) {
 					BusTranData newData = new BusTranData();
 					GraftTraData.cvtLadTraData(rawData, newData);
 					this.cvtBusTranData(rawData, newData);

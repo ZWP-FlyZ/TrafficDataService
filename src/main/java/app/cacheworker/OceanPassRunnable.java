@@ -32,7 +32,7 @@ public class OceanPassRunnable extends DataRunnable {
 			
 			try {
 				haveNull = JudgecanSave.JudgeNull(rawData.getClass(), rawData, haveNull);
-				if(!haveNull){
+				if(!haveNull&&ds.rangeService.checkOceanPass(rawData)){
 					OceanPassData newData = new OceanPassData();
 					GraftTraData.cvtWatTraData(rawData, newData);
 					this.cvtOceanPassData(rawData, newData);
