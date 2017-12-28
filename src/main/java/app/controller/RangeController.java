@@ -74,9 +74,9 @@ public class RangeController {
 	@ResponseBody
 	public EvelResponse getEvel(HttpServletResponse response,RequestData data){
 		response.setHeader("Access-Control-Allow-Origin", "*");
-//		data.setCompanyId("");
-//		data.setTimeRange("2016-01:2017-12");
-//		data.setTranType("道路客运");
+		data.setCompanyId("");
+		data.setTimeRange("2017-08:2017-11");
+		data.setTranType("道路客运");
 		
 		
 		EvelResponse er = new EvelResponse();

@@ -41,8 +41,8 @@ public class EvelService {
 //		ts[1] = ts[1].substring(0, 7);
 		ls.add(ts[0].replace("-", ""));
 		ls.add(ts[1].replace("-", ""));
-		ls.add(ts[0]);
-		ls.add(ts[1]);
+		ls.add(ts[0]+"-01");
+		ls.add(ts[1]+"-01");
 		return ls;
 	}
 	
