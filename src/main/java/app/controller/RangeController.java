@@ -60,6 +60,7 @@ public class RangeController {
 		List<String> tmp;
 		rr.setErrCode(30);
 		rr.setTranType(data.getTranType());
+		System.err.println("ranges = "+data.getRanges());
 		try {
 			tmp = gson.fromJson(data.getRanges(), new TypeToken<List<String>>(){}.getType());
 			rs.setRange(data.getTranType(),tmp);
@@ -74,9 +75,9 @@ public class RangeController {
 	@ResponseBody
 	public EvelResponse getEvel(HttpServletResponse response,RequestData data){
 		response.setHeader("Access-Control-Allow-Origin", "*");
-		data.setCompanyId("");
-		data.setTimeRange("2017-08:2017-11");
-		data.setTranType("道路客运");
+//		data.setCompanyId("");
+//		data.setTimeRange("2017-08:2017-11");
+//		data.setTranType("道路客运");
 		
 		
 		EvelResponse er = new EvelResponse();
